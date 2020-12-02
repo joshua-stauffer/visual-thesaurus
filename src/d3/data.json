@@ -1,0 +1,81 @@
+{"A":
+  { 
+    "links":
+      [
+        {"target": "root", "source": "synonym", "strength": 0.7},
+        {"target": "root", "source": "antonym", "strength": 0.7},
+        {"target": "synonym", "source": "B", "strength": 0.1},
+        {"target": "synonym", "source": "C", "strength": 0.1},
+        {"target": "synonym", "source": "D", "strength": 0.1},
+        {"target": "synonym", "source": "E", "strength": 0.1},
+        {"target": "antonym", "source": "F", "strength": 0.1},
+        {"target": "antonym", "source": "G", "strength": 0.1},
+        {"target": "antonym", "source": "H", "strength": 0.1}
+      ],
+    "nodes":
+      [
+        {"id": "root", "group": 0, "label": "A", "level": 0},
+        {"id": "synonym", "group": 1, "label": "", "level": 1},
+        {"id": "antonym", "group": 2, "label": "", "level": 1},
+        {"id": "B", "group": 1, "label": "B", "level": 2},
+        {"id": "C", "group": 1, "label": "C", "level": 2},
+        {"id": "D", "group": 1, "label": "D", "level": 2},
+        {"id": "E", "group": 1, "label": "E", "level": 2},
+        {"id": "F", "group": 2, "label": "F", "level": 2},
+        {"id": "G", "group": 2, "label": "G", "level": 2},
+        {"id": "H", "group": 2, "label": "H", "level": 2}
+      ]
+  },
+  "B":
+    { 
+    "links":
+      [
+        {"target": "root", "source": "synonym", "strength": 0.7},
+        {"target": "root", "source": "antonym", "strength": 0.7},
+        {"target": "synonym", "source": "C", "strength": 0.1},
+        {"target": "synonym", "source": "D", "strength": 0.1},
+        {"target": "synonym", "source": "E", "strength": 0.1},
+        {"target": "synonym", "source": "F", "strength": 0.1},
+        {"target": "antonym", "source": "G", "strength": 0.1},
+        {"target": "antonym", "source": "H", "strength": 0.1},
+        {"target": "antonym", "source": "A", "strength": 0.1}
+      ],
+    "nodes":
+      [
+        {"id": "root", "group": 0, "label": "B", "level": 0},
+        {"id": "synonym", "group": 1, "label": "", "level": 1},
+        {"id": "antonym", "group": 2, "label": "", "level": 1},
+        {"id": "C", "group": 1, "label": "C", "level": 2},
+        {"id": "D", "group": 1, "label": "D", "level": 2},
+        {"id": "E", "group": 1, "label": "E", "level": 2},
+        {"id": "F", "group": 1, "label": "F", "level": 2},
+        {"id": "G", "group": 2, "label": "G", "level": 2},
+        {"id": "H", "group": 2, "label": "H", "level": 2},
+        {"id": "A", "group": 2, "label": "A", "level": 2}
+      ]
+  },
+  "C":
+  { 
+  "links":
+    [
+      {"target": "root", "source": "synonym", "strength": 0.7},
+      {"target": "root", "source": "antonym", "strength": 0.7},
+      {"target": "synonym", "source": "D", "strength": 0.1},
+      {"target": "synonym", "source": "E", "strength": 0.1},
+      {"target": "antonym", "source": "F", "strength": 0.1},
+      {"target": "antonym", "source": "G", "strength": 0.1},
+      {"target": "antonym", "source": "A", "strength": 0.1}
+    ],
+  "nodes":
+    [
+      {"id": "root", "group": 0, "label": "C", "level": 0},
+      {"id": "synonym", "group": 1, "label": "", "level": 1},
+      {"id": "antonym", "group": 2, "label": "", "level": 1},
+      {"id": "D", "group": 1, "label": "D", "level": 2},
+      {"id": "E", "group": 1, "label": "E", "level": 2},
+      {"id": "F", "group": 2, "label": "F", "level": 2},
+      {"id": "A", "group": 2, "label": "A", "level": 2},
+      {"id": "G", "group": 2, "label": "G", "level": 2}
+    ]
+}
+}

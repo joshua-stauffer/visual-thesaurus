@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRef, useEffect } from 'react';
 import { RunForceGraph } from '../d3/runForceGraph.js';
 
 export function ForceGraph({
@@ -7,23 +8,17 @@ export function ForceGraph({
   clickNode,
   setSidebarId
 }) {
-  const containerRef = React.useRef(null);
+  const containerRef = useRef(null);
 
-  React.useEffect(() => {
-    let destroyFn;
-    if (containerRef.current) {
-      const { destroy } = 
-        RunForceGraph(
-          containerRef.current,
-          linksData,
-          nodesData,
-          clickNode,
-          setSidebarId);
-      destroyFn = destroy;
-    }
+  useEffect(() => {
+    let o = RunForceGraph(containerRef.current, linksData, nodesData, clickNode, setSidebarId);
+    return o.remove;
+  }, [linksData, nodesData])
 
-    return destroyFn;
-  }, []);
 
-  return <div ref={containerRef} className="container" />;
+  return (
+    <div ref={containerRef} className="container">
+      <svg></svg>
+    </div>
+  )
 }

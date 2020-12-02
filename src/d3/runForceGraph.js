@@ -8,14 +8,17 @@ export function RunForceGraph(
   clickFunc,
   mouseOverFunc
 ) {
+  console.log('entering d3 code of force graph')
+
   // copy data
   const nodes = [...nodesData];
   const links = [...linksData];
   console.log('nodes' + nodes);
   console.log('links' + links)
 
+  console.log('getting container:' + container)
+
   const containerRect = container.getBoundingClientRect();
-  console.log('got container:' + container)
   const height = containerRect.height;
   console.log('height:' + height)
   const width = containerRect.width;
@@ -33,9 +36,8 @@ export function RunForceGraph(
     .force('collision', d3.forceCollide([45]));
 
 
-  const svg = d3.select(container)
-    .append('svg')
-    .attr('viewBox', [0, 0, width, height])
+  const svg = d3.select(container).select('svg')
+    .attr('viewBox', [0, 0, width, height]);
 
 
   const getNodeColor = node => {
@@ -131,11 +133,6 @@ export function RunForceGraph(
   })
 
   return {
-    destroy: () => {
-      simulation.stop();
-    },
-    nodes: () => {
-      return svg.node();
-    }
+    remove: () => svg.selectAll('*').remove()
   }
 }

@@ -1,3 +1,7 @@
+html {
+  font-size: 10px;
+}
+
 .Main {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -23,5 +27,37 @@
 .sidebar {
   grid-column: 2;
   width: 100%;
+  height: 600px;
+  overflow-y: scroll;
   border: solid 1px black;
+}
+.sidebar button {
+  width: 50%;
+  background-color: grey;
+  border-radius: none;
+  border: 1px solid black;
+  margin: 0;
+}
+.sidebar .active-button {
+  border-bottom: none;
+  background-color: white;
+}
+.sidebar .active-button:focus {
+  outline: none;
+  border-bottom: 1px dotted grey;
+}
+
+.popup-sidebar-text {
+  height: 30%;
+  overflow-y: hidden;
+}
+
+.popup-subtitle {
+  font-size: 1.5rem;
+  font-weight: none;
+}
+
+.search-bar {
+  width: 200px;
+  margin-left: 50px;
 }

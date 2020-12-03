@@ -88,7 +88,10 @@ export function RunForceGraph(
         .call(drag(simulation))
       .on('mouseover', (e, d) => mouseOverFunc(d.id))
       .on('mouseout', () => mouseOverFunc(null))
-      .on('click', (e, d) => clickFunc(d.id)),
+      .on('click', (e, d) => {
+        mouseOverFunc(null);
+        clickFunc(d.id);
+      }),
       update => update,
       exit =>
         exit.remove()

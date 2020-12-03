@@ -5,13 +5,13 @@ import { RunForceGraph } from '../d3/runForceGraph.js';
 export function ForceGraph({
   linksData,
   nodesData,
-  clickNode,
-  setSidebarId
+  clickFunc,
+  mouseOverFunc
 }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    let o = RunForceGraph(containerRef.current, linksData, nodesData, clickNode, setSidebarId);
+    let o = RunForceGraph(containerRef.current, linksData, nodesData, clickFunc, mouseOverFunc);
     return o.remove;
   }, [linksData, nodesData])
 

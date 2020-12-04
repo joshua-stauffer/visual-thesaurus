@@ -1,26 +1,79 @@
 import { useState } from 'react';
-import data from '../d3/data.json';
+import data from '../d3/data.json'; //TODO: change this to a state reflecting an api call
 
 
 export function useSideBarState() {
-  const [sideBarState, setSideBarState] = useState(true)
+  const [sideBarState, setSideBarState] = useState('definition');
+  const [lastState, setLastState] = useState(sideBarState);
+  const [hoverState, setHoverState] = useState(data.A)
+  let hoverTitle = hoverState.title;
+  let hoverDef = hoverState.definition;
+  let hoverExample = hoverState.example;
 
-  const changeToExample = () => setSideBarState(false);
-  const changeToDef = () => setSideBarState(true);
+  const changeToExample = () => {
+    setLastState('example');
+    setSideBarState('example');
+  }
 
-  return [sideBarState, changeToExample, changeToDef]
-}
+  const changeToDef = () => {
+    setLastState('definition');
+    setSideBarState('definition');
+  }
 
-export function useHoverSidebarState() {
-  const [hoverSidebarState, setHoverSidebarState] = useState(null);
+  const changeToSearch = () => {
+    setLastState('search');
+    setSideBarState('search');
+  }
 
-  const hoverFunc = id => {
+  const changeToHover = id => {
+
     if (id in data) {
-      setHoverSidebarState(id)
+      setHoverState(data[id])
+      hoverTitle = hoverState.title;
+      hoverDef = hoverState.definition;
+      hoverExample = hoverState.example;
+      setSideBarState('hover');
     } else {
-      setHoverSidebarState(null)
+      setSideBarState(lastState);
     }
   }
 
-  return [hoverSidebarState, hoverFunc]
+  return {
+    sideBarState,
+    changeToExample,
+    changeToDef,
+    changeToSearch,
+    changeToHover,
+    hoverTitle,
+    hoverDef,
+    hoverExample
+  }
+}
+
+
+export function useNodeState() {
+  const [activeNode, setActiveNode] = useState(data.A) 
+  //TODO: update this to reflect something in the API interface so that it
+  // always selects the first (default) object in data set
+ 
+  function clickNode(node) {
+    if (node in data) {
+      setActiveNode(data[node])
+    }
+  }
+  const titleText = activeNode.title
+  const exampleText = activeNode.example
+  const defText = activeNode.definition
+  const activeLinks = activeNode.links
+  const activeNodes = activeNode.nodes
+
+
+  return {
+    titleText,
+    exampleText,
+    defText,
+    activeLinks,
+    activeNodes,
+    clickNode
+  }
 }

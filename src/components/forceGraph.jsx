@@ -3,17 +3,17 @@ import { useRef, useEffect } from 'react';
 import { RunForceGraph } from '../d3/runForceGraph.js';
 
 export function ForceGraph({
-  linksData,
-  nodesData,
-  clickFunc,
-  mouseOverFunc
+  activeLinks,
+  activeNodes,
+  clickNode,
+  changeToHover
 }) {
   const containerRef = useRef(null);
-
+  
   useEffect(() => {
-    let o = RunForceGraph(containerRef.current, linksData, nodesData, clickFunc, mouseOverFunc);
+    let o = RunForceGraph(containerRef.current, activeLinks, activeNodes, clickNode, changeToHover);
     return o.remove;
-  }, [linksData, nodesData])
+  }, [activeLinks, activeNodes])
 
 
   return (

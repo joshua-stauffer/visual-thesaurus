@@ -32,7 +32,7 @@ html {
   border: solid 1px black;
 }
 .sidebar button {
-  width: 50%;
+  width: 33%;
   background-color: grey;
   border-radius: none;
   border: 1px solid black;
@@ -57,7 +57,11 @@ html {
   font-weight: none;
 }
 
+.popup-aside {
+  border: double 1px black;
+  margin: 20px;
+}
+
 .search-bar {
   width: 200px;
-  margin-left: 50px;
 }

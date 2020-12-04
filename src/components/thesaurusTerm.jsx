@@ -1,3 +1,3 @@
-export function ThesaurusTerm({ term }) {
-  return <li>{ term }</li>
+export function ThesaurusTerm({ term, index }) {
+  return <li key={index}>{ term }</li>
 }

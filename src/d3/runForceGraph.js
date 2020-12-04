@@ -8,22 +8,13 @@ export function RunForceGraph(
   clickFunc,
   mouseOverFunc
 ) {
-  console.log('entering d3 code of force graph')
 
   // copy data
   const nodes = [...nodesData];
   const links = [...linksData];
-  console.log('nodes' + nodes);
-  console.log('links' + links)
-
-  console.log('getting container:' + container)
-
   const containerRect = container.getBoundingClientRect();
   const height = containerRect.height;
-  console.log('height:' + height)
   const width = containerRect.width;
-  console.log('width:' + width)
-
 
   const simulation = 
   d3.forceSimulation(nodes)

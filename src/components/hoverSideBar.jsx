@@ -6,11 +6,16 @@ export function HoverSideBar({
 }) {
   return (
     <div className="sidebar">
+      
       <aside className="popup-aside">
-        <h1>{ hoverTitle }</h1>
-        <p className="popup-sidebar-text">{ hoverDef }</p>
+        <h1 className="sidebar-title">{ hoverTitle }</h1>
+        <p>Click to learn more about this word</p>
+        <h4 className="popup-subtitle">Definition</h4>
+        <p className="sidebar-text">{ hoverDef }</p>
         <hr/>
-        <p className="popup-sidebar-text">{ hoverExample }</p>
+        <h4 className="popup-subtitle">Example</h4>
+        <p className="sidebar-text">{ hoverExample }</p>
+        <hr/>
       </aside>
     </div>
   )

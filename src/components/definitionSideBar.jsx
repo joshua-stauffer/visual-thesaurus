@@ -10,8 +10,8 @@ export function DefSideBar({
       <SideBarButtons
         {...props}
       />
-      <h1>{ titleText }</h1>
-      <p>{ defText }</p>
+      <h1 className="sidebar-title">{ titleText }</h1>
+      <p className="sidebar-text">{ defText }</p>
     </div>
   )
 }

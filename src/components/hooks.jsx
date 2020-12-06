@@ -1,11 +1,17 @@
 import { useState } from 'react';
-import data from '../d3/data.json'; //TODO: change this to a state reflecting an api call
+//import data from '../d3/data.json'; //TODO: change this to a state reflecting an api call
 
+const getFirstKey = d => {
+  for (let k in d) {
+    return k;
+  }
+}
 
-export function useSideBarState() {
+export function useSideBarState(data) {
+  const key = getFirstKey(data);
   const [sideBarState, setSideBarState] = useState('definition');
   const [lastState, setLastState] = useState(sideBarState);
-  const [hoverState, setHoverState] = useState(data.A)
+  const [hoverState, setHoverState] = useState(data[key])
   let hoverTitle = hoverState.title;
   let hoverDef = hoverState.definition;
   let hoverExample = hoverState.example;
@@ -51,8 +57,12 @@ export function useSideBarState() {
 }
 
 
-export function useNodeState() {
-  const [activeNode, setActiveNode] = useState(data.A) 
+export function useNodeState(data) {
+  console.log('entering useNodeState')
+
+  const key = getFirstKey(data);
+  console.log(data[key])
+  const [activeNode, setActiveNode] = useState(data[key]) 
   //TODO: update this to reflect something in the API interface so that it
   // always selects the first (default) object in data set
  

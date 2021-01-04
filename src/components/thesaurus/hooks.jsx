@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import data from '../d3/data.json';
+import data from '../../d3/data.json';
 
 
 export function useSideBarState() {

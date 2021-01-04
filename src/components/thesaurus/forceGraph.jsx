@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef, useEffect } from 'react';
-import { RunForceGraph } from '../d3/runForceGraph.js';
+import { RunForceGraph } from '../../d3/runForceGraph.js';
 
 export function ForceGraph({
   linksData,

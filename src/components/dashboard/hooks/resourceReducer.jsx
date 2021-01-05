@@ -1,8 +1,6 @@
 export const resourceReducerState = {
-  resource: 'home',
-  apiAddress: null,
-  generalApiAddress: null,
-  specificApiAddress: null
+  view: 'home',
+  apiAddress: null
 }
 
 
@@ -12,55 +10,89 @@ export function resourceReducer(state, action) {
     case 'home': {
       return {
         ...state,
-        resource: 'home',
-        generalApiAddress: null,
-        specificApiAddress: null
+        view: 'home',
+        apiAddress: null
       }
     }
 
-    case 'quotes': {
+    case 'quotes-gen': {
       return {
-        ...state,
-        resource: 'quotes',
-        generalApiAddress: null,
-        specificApiAddress: null
+        view: 'quotes-gen',
+        apiAddress: '/api/gen-quotes',
+        apiArgs: 'my api args'
       }
     }
 
-    case 'resources': {
+    case 'quotes-sp': {
       return {
-        ...state,
-        resource: 'resources',
-        generalApiAddress: null,
-        specificApiAddress: null
+        view: 'quotes-sp-' + action.payload,
+        apiAddress: '/api/sp-quotes-' + action.payload,
       }
     }
 
-    case 'videos': {
+    case 'resources-gen': {
       return {
         ...state,
-        resource: 'videos',
-        generalApiAddress: null,
-        specificApiAddress: null
-      }
+        view: 'resources-gen',
+        apiAddress: '/api/gen-resources',
+        }
     }
 
-    case 'blog': {
+    case 'resources-sp': {
       return {
         ...state,
-        resource: 'blog',
-        generalApiAddress: null,
-        specificApiAddress: null
-      }
+        view: 'resources-sp',
+        apiAddress: null,
+        }
     }
 
-    case 'thesaurus': {
+
+    case 'videos-gen': {
       return {
         ...state,
-        resource: 'thesaurus',
-        generalApiAddress: null,
-        specificApiAddress: null
-      }
+        view: 'videos-gen',
+        apiAddress: null,
+        }
+    }
+
+    case 'videos-sp': {
+      return {
+        ...state,
+        view: 'videos-sp',
+        apiAddress: null,
+        }
+    }
+
+    case 'blog-gen': {
+      return {
+        ...state,
+        view: 'blog-gen',
+        apiAddress: null,
+        }
+    }
+
+    case 'blog-sp': {
+      return {
+        ...state,
+        view: 'blog-sp',
+        apiAddress: null,
+        }
+    }
+
+    case 'thesaurus-gen': {
+      return {
+        ...state,
+        view: 'thesaurus-gen',
+        apiAddress: null,
+        }
+    }
+
+    case 'thesaurus-sp': {
+      return {
+        ...state,
+        view: 'thesaurus-sp',
+        apiAddress: null,
+        }
     }
 
     default:

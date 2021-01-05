@@ -3,42 +3,62 @@ import { useReducer} from 'react';
 
 import { Overview } from './overview';
 import { resourceReducerState, resourceReducer } from './hooks/resourceReducer';
-import { ResourceView } from './resourceView';
+import { GenResourceView } from './genResourceView';
+import { SpecificResourceView } from './specificResourceView';
 
+import { useAPI } from './hooks/useAPI';
 import { useData } from './hooks/useData';
+import { useDataStore } from './hooks/useDataStore';
 
-
-const fakeData = [
-  {id: 1, index: 0, title: 'Resource 1', edited: false},
-  {id: 2, index: 1, title: 'Resource 2', edited: false},
-  {id: 3, index: 2, title: 'Resource 3', edited: false},
-  {id: 4, index: 3, title: 'Resource 4', edited: false},
-  {id: 5, index: 4, title: 'Resource 5', edited: false},
-  {id: 6, index: 5, title: 'Resource 6', edited: false},
-  {id: 7, index: 6, title: 'Resource 7', edited: false},
-]
 
 
 export function Dashboard() {
   const [state, dispatch] = useReducer(resourceReducer, resourceReducerState);
-  const [data, setData, dataFuncs] = useData();
+  const [callAPI, isLoading] = useAPI();
+  const getData = useDataStore();
 
-  useEffect(() => {
-    setData(fakeData)
-  }, [])
+
+
+  const dataObject = getData(state.view)
+  const { hasLoaded } = dataObject;
+  const [dataFuncs] = useData(dataObject, dispatch);
   
 
+  useEffect(() => {
+    if ((hasLoaded || isLoading) || state.view === 'home') return
+    
+    callAPI(state.apiAddress, state.apiArgs, dataObject)
+  }, [hasLoaded, isLoading, state, dataObject])
 
-  if (state.resource === 'home') {
+
+  if (state.view === 'home') {
     return <Overview dispatch={dispatch}/>
   }
 
-  return(
-    <ResourceView
-      state={state}
-      dispatch={dispatch}
-      data={data}
-      dataFuncs={dataFuncs}
-    />
-  )
+  if (!hasLoaded) {
+    return <h1>... loading ...</h1>
+  }
+
+  if (state.view.split('-')[1] === 'gen') {
+    return(
+      <GenResourceView
+        view={ state.view }
+        dispatch={dispatch}
+        data={dataObject.data}
+        dataFuncs={dataFuncs}
+      />
+    )
+
+  } else if (state.view.split('-')[1] === 'sp') {
+    return(
+      <SpecificResourceView
+        rawView={ state.view }
+        dispatch={dispatch}
+        dataObject={dataObject}
+      />
+    )
+
+  } else {
+    throw new Error('Unexpected view in dashboard')
+  }
 }

@@ -1,6 +1,6 @@
 
-export function ResourceItem({ title }) {
+export function ResourceItem({ primary, secondary }) {
   return (
-    <p>{ title }</p>
+    <p>{ primary } - { secondary }</p>
   )
 }

@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 
-import { compareData } from '../utils/compareData';
+import { compareObjIndex } from '../utils/compareObjIndex';
 import { swapPlaces } from '../utils/swapPlaces';
 
 
-export function useData(){
-  const [data, setData] = useState(null)
+export function useData(dataObject, dispatch){
+
   const [moveUp, setMoveUp] = useState(null);
   const [moveDown, setMoveDown] = useState(null);
+
   
   useEffect(() => {
     if (!moveUp) return;
+    const { data, updateData } = dataObject;
 
     const indexOne = moveUp;
     const eleOneId = data.find(ele => ele.index === indexOne).id
@@ -22,15 +24,17 @@ export function useData(){
     eleOne.edited = true;
     const eleTwo = newData.find(ele => ele.id === eleTwoId)
     eleTwo.edited = true;
-    newData.sort(compareData)
-    setData(newData)
-    console.log(' new data: ', newData)
+    newData.sort(compareObjIndex)
+    updateData(newData)
+    // console.log(' new data: ', newData)
     setMoveUp(null);
   }, [moveUp])
 
+
   useEffect(() => {
     if (!moveDown && moveDown !== 0) return;
-    
+
+    const { data, updateData } = dataObject;
 
     const indexOne = moveDown;
     const eleOneId = data.find(ele => ele.index === indexOne).id
@@ -42,20 +46,20 @@ export function useData(){
     eleOne.edited = true;
     const eleTwo = newData.find(ele => ele.id === eleTwoId)
     eleTwo.edited = true;
-    newData.sort(compareData)
-    setData(newData)
-    console.log(' new data: ', newData)
-
+    newData.sort(compareObjIndex)
+    updateData(newData)
+    // console.log(' new data: ', newData)
     setMoveDown(null);
   }, [moveDown])
+
 
   const dataFuncs = {
     moveUp: (index) => setMoveUp(index),
     moveDown: (index) => setMoveDown(index),
     add: (id) => console.log('add below', id),
-    edit: (id) => console.log('edit ', id),
+    edit: (id) => dispatch({type: 'quotes-sp', payload: id}),
     del: (id) => console.log('delete ', id)
   }
 
-  return [data, setData, dataFuncs]
+  return [dataFuncs]
 }

@@ -9,9 +9,7 @@ export function resourceReducer(state, action) {
 
     case 'home': {
       return {
-        ...state,
         view: 'home',
-        apiAddress: null
       }
     }
 
@@ -19,7 +17,6 @@ export function resourceReducer(state, action) {
       return {
         view: 'quotes-gen',
         apiAddress: '/api/gen-quotes',
-        apiArgs: 'my api args'
       }
     }
 
@@ -30,9 +27,34 @@ export function resourceReducer(state, action) {
       }
     }
 
+    case 'quotes-new': {
+      // call api which will add new quote and redirect to list view
+      return {
+        view: 'quotes-gen',
+        apiAddress: '/api/new-quotes',
+        apiArgs: {method: 'POST'}
+      }
+    }
+
+    case 'quotes-del': {
+      return {
+        view: 'quotes-gen',
+        apiAddress: 'api/del-quotes-' + action.payload,
+        apiArgs: {method: 'DELETE'}
+      }
+    }
+
+    case 'quotes-save': {
+      const id = action.payload.id;
+      return {
+        view: 'quotes-sp-' + id,
+        apiAddress: 'api/save-quotes',
+        apiArgs: action.payload.body
+      }
+    }
+
     case 'resources-gen': {
       return {
-        ...state,
         view: 'resources-gen',
         apiAddress: '/api/gen-resources',
         }
@@ -40,16 +62,14 @@ export function resourceReducer(state, action) {
 
     case 'resources-sp': {
       return {
-        ...state,
-        view: 'resources-sp',
-        apiAddress: null,
+        view: 'resources-sp-' + action.payload,
+        apiAddress: '/api/sp-resources-' + action.payload,
         }
     }
 
 
     case 'videos-gen': {
       return {
-        ...state,
         view: 'videos-gen',
         apiAddress: null,
         }
@@ -57,7 +77,6 @@ export function resourceReducer(state, action) {
 
     case 'videos-sp': {
       return {
-        ...state,
         view: 'videos-sp',
         apiAddress: null,
         }
@@ -65,7 +84,6 @@ export function resourceReducer(state, action) {
 
     case 'blog-gen': {
       return {
-        ...state,
         view: 'blog-gen',
         apiAddress: null,
         }
@@ -73,7 +91,6 @@ export function resourceReducer(state, action) {
 
     case 'blog-sp': {
       return {
-        ...state,
         view: 'blog-sp',
         apiAddress: null,
         }
@@ -81,7 +98,6 @@ export function resourceReducer(state, action) {
 
     case 'thesaurus-gen': {
       return {
-        ...state,
         view: 'thesaurus-gen',
         apiAddress: null,
         }
@@ -89,13 +105,12 @@ export function resourceReducer(state, action) {
 
     case 'thesaurus-sp': {
       return {
-        ...state,
         view: 'thesaurus-sp',
         apiAddress: null,
         }
     }
 
     default:
-      throw new Error();
+      throw new Error(`unknown view: ${action.type}`);
   }
 }

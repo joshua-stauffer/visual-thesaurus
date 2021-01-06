@@ -1,6 +1,9 @@
+import { ImWarning } from 'react-icons/im';
 
-export function ResourceItem({ primary, secondary }) {
+export function ResourceItem({ primary, secondary, editWarning }) {
   return (
-    <p>{ primary } - { secondary }</p>
+
+      <p>{ editWarning && <ImWarning color={'orange'} size={'30px'}/> }{ primary } - { secondary }</p>
+
   )
 }

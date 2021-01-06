@@ -12,3 +12,8 @@ export function parseView(rawView) {
   }
   return [view, id]
 }
+
+export function getSpecificView(rawView) {
+  const viewArgs = rawView.split('-');
+  return viewArgs[0] + '-sp'
+}

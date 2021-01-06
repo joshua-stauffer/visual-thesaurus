@@ -1,23 +1,42 @@
 import { MainButtonBar } from './mainButtonBar';
 
-export function EditQuote({dispatch, dataObject}){
+export function EditQuote({dispatch, dataObject, dataFuncs}){
+  const { id, data, editData, togglePublished, isEdited } = dataObject;
+  console.log('is edted is : ', isEdited)
+  const { save } = dataFuncs;
 
   return (
     <main>
       <MainButtonBar
         backFunc={() => dispatch({type: 'quotes-gen'})}
         homeFunc={() => dispatch({type: 'home'})}
-        saveFunc={() => console.log('save this, please!')}
+        saveFunc={() => save()}
+        isEdited={isEdited}
       />
       <h1>Edit Quote</h1>
       <hr/>
       <label>
         <p>Quote: </p>
-        <textarea value={dataObject.data.text}/>
+        <textarea
+          value={data.text || ''}
+          onChange={e => editData(e.target.value, 'text', id)}
+        />
       </label>
       <label>
         <p>Author: </p>
-        <textarea value={dataObject.data.author}/>
+        <textarea
+          value={data.author || ''}
+          onChange={e => editData(e.target.value, 'author', id)}
+        />
+      </label>
+      <label>
+        Published: 
+          <input
+            type="checkbox"
+            name="published"
+            checked={data.published}
+            // amazingly, this won't accept a third parameter!!
+            onChange={(e) => togglePublished(e, id)}/>
       </label>
       
     </main>

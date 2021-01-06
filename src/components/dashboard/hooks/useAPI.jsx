@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import {} from './../fakeData/fakeList.json'
 
 export function useAPI(){
 
@@ -11,15 +10,24 @@ export function useAPI(){
   const [dataObject, setDataObject] = useState(null);
   const [APIArgs, setAPIArgs] = useState(null);
 
+  const resetAPICall = useCallback(() => {
+    setAPIAddress(null);
+    setAPIArgs(null);
+    setLoadData(false);
+    dataObject.dataHasLoaded();
+    setIsLoading(false);
+    setDataObject(null);
+  }, [dataObject])
+
+
   useEffect(() => {
     if (!loadData) return;
-
-
+    console.log('calling api with the following args: ', APIArgs, APIAddress, dataObject)
     setIsLoading(true)
     setLoadData(false)
     //setHasLoaded(false)
     // make api call
-    fetch(APIAddress)
+    fetch(APIAddress, APIArgs)
       .then(r => r.json())
       .then(data => {
         console.log('got data ', data)
@@ -27,14 +35,16 @@ export function useAPI(){
         //setHasLoaded(true)
         dataObject.updateData(data, dataObject.id);
         dataObject.dataHasLoaded(dataObject.id);
+        console.log('just updated data for ', dataObject.id)
         resetAPICall();
       })
       .catch((error => console.log('error in fetch: ', error)))
 
-  }, [loadData, APIArgs, APIAddress])
+  }, [loadData, APIArgs, APIAddress, dataObject, resetAPICall])
 
 
   const callAPI = (APIAddress, APIArgs, dataObject) => {
+    console.log('entered callAPI')
     setAPIAddress(APIAddress);
     setAPIArgs(APIArgs);
     setDataObject(dataObject);
@@ -43,14 +53,7 @@ export function useAPI(){
     setIsLoading(true);
   }
 
-  const resetAPICall = () => {
-    setAPIAddress(null);
-    setAPIArgs(null);
-    setLoadData(false);
-    dataObject.dataHasLoaded();
-    setIsLoading(false);
-    setDataObject(null);
-  }
+
 
   return [callAPI, isLoading];
 }
@@ -63,5 +66,25 @@ export function useAPI(){
         dataObject.updateData(data)
         resetAPICall()
       })
+
+*/
+
+
+/*
+this was right before the return:
+
+
+  const resetAPICall = () => {
+    setAPIAddress(null);
+    setAPIArgs(null);
+    setLoadData(false);
+    dataObject.dataHasLoaded();
+    setIsLoading(false);
+    setDataObject(null);
+  }
+
+
+
+
 
 */

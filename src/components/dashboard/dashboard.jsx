@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useReducer} from 'react';
 
+import { FaSpinner } from 'react-icons/fa'
+
 import { Overview } from './overview';
 import { resourceReducerState, resourceReducer } from './hooks/resourceReducer';
 import { GenResourceView } from './genResourceView';
@@ -16,8 +18,6 @@ export function Dashboard() {
   const [state, dispatch] = useReducer(resourceReducer, resourceReducerState);
   const [callAPI, isLoading] = useAPI();
   const getData = useDataStore();
-
-
 
   const dataObject = getData(state.view)
   const { hasLoaded } = dataObject;
@@ -36,7 +36,7 @@ export function Dashboard() {
   }
 
   if (!hasLoaded) {
-    return <h1>... loading ...</h1>
+    return <FaSpinner size={'50px'}/>
   }
 
   if (state.view.split('-')[1] === 'gen') {
@@ -55,6 +55,7 @@ export function Dashboard() {
         rawView={ state.view }
         dispatch={dispatch}
         dataObject={dataObject}
+        dataFuncs={dataFuncs}
       />
     )
 

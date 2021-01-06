@@ -6,10 +6,11 @@ import { swapPlaces } from '../utils/swapPlaces';
 
 export function useData(dataObject, dispatch){
 
-  const [moveUp, setMoveUp] = useState(null);
-  const [moveDown, setMoveDown] = useState(null);
 
   
+  
+
+  const [moveUp, setMoveUp] = useState(null);
   useEffect(() => {
     if (!moveUp) return;
     const { data, updateData } = dataObject;
@@ -31,6 +32,8 @@ export function useData(dataObject, dispatch){
   }, [moveUp])
 
 
+
+  const [moveDown, setMoveDown] = useState(null);
   useEffect(() => {
     if (!moveDown && moveDown !== 0) return;
 
@@ -53,12 +56,56 @@ export function useData(dataObject, dispatch){
   }, [moveDown])
 
 
+  const [makeNew, setMakeNew] = useState(false);
+  useEffect(() => {
+    if (!makeNew) return;
+    dataObject.reload();
+    const viewName = dataObject.resource + '-new'
+    dispatch({type: viewName})
+    setMakeNew(false)
+  }, [makeNew])
+
+
+  const [eleToDelete, setEleToDelete] = useState(null);
+  useEffect(() => {
+    if (!eleToDelete) return
+    dataObject.reload();
+    const viewName = dataObject.resource + '-del'
+    dispatch({type: viewName, payload: eleToDelete})
+    setEleToDelete(null);
+  }, [eleToDelete])
+
+
+  const [save, setSave] = useState(null);
+  useEffect(() => {
+    if (!save) return;
+    const { id, data, resource, reload } = dataObject;
+    reload(id);
+    const viewName = resource + '-save'
+    dispatch(
+      {
+        type: viewName,
+        payload: {
+          id: id, 
+          body: {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+          }
+        }
+      })
+    setSave(null);
+  }, [save])
+
+
+  
   const dataFuncs = {
     moveUp: (index) => setMoveUp(index),
     moveDown: (index) => setMoveDown(index),
-    add: (id) => console.log('add below', id),
-    edit: (id) => dispatch({type: 'quotes-sp', payload: id}),
-    del: (id) => console.log('delete ', id)
+    add: () => setMakeNew(true),
+    edit: (id) => dispatch({type: dataObject.specificView, payload: id}),
+    del: (id) => setEleToDelete(id),
+    save: () => setSave(true)
   }
 
   return [dataFuncs]

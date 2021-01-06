@@ -3,17 +3,19 @@ import { useGenericStore } from './useGenericStore';
 import { useSpecificStore } from './useSpecificStore';
 
 import { parseView } from './../utils/parseView';
+import { useEffect } from 'react';
 
 export function useDataStore(){
-  const genQuotesData = useGenericStore('quotes-gen')
-  const accessQuotesStore = useSpecificStore();
+  
+  const [accessQuotesStore, changeList, resetView, viewHasBeenReset] = useSpecificStore('quotes');
+  let genQuotesData = useGenericStore('quotes', changeList, resetView, viewHasBeenReset);
 
-  const genResourcesData = useGenericStore('resources-gen')
+
+  const genResourcesData = useGenericStore('resources')
 
 
   const getData = (rawView) => {
 
-    // get id info from view, if necessary
     const [view, id] = parseView(rawView)
 
     switch (view) {

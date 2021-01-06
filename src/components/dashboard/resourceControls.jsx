@@ -20,14 +20,14 @@ export function ResourceControls({id, index, funcs, isFirst, isLast, view}) {
           </button>
         </>
       }
-
+{/* 
       <button
         onClick={() => add(id)}
         disabled={add ? false : true}
       >
         Add New Below
       </button>
-
+ */}
       <button
         onClick={() => edit(id)}
         disabled={edit ? false : true}

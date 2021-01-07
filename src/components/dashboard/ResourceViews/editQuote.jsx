@@ -2,7 +2,6 @@ import { MainButtonBar } from './mainButtonBar';
 
 export function EditQuote({dispatch, dataObject, dataFuncs}){
   const { id, data, editData, togglePublished, isEdited } = dataObject;
-  console.log('is edted is : ', isEdited)
   const { save } = dataFuncs;
 
   return (
@@ -13,7 +12,7 @@ export function EditQuote({dispatch, dataObject, dataFuncs}){
         saveFunc={() => save()}
         isEdited={isEdited}
       />
-      <h1>Edit Quote</h1>
+      <h1>Edit Quotes</h1>
       <hr/>
       <label>
         <p>Quote: </p>

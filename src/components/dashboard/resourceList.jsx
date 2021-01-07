@@ -1,13 +1,18 @@
 import { ResourceItem } from './resourceItem';
 import { ResourceControls } from './resourceControls';
 
-export function ResourceList({data, dataFuncs, view, name}){
+export function ResourceList({dataObject, dataFuncs, view, name}){
+  const { data, isEditedList } = dataObject;
   return (
     <ul>
       <li><button onClick={()=> dataFuncs.add(-1)}>Add New { name }</button></li>
     {data.map(d => (
       <li>
-        <ResourceItem key={'item' + d.id} primary={d.primary} secondary={d.secondary} editWarning={d.isEdited}/>
+        <ResourceItem
+          key={'item' + d.id}
+          primary={d.primary}
+          secondary={d.secondary}
+          editWarning={isEditedList.includes(d.id) ? true : false}/>
         <ResourceControls 
           id={d.id}
           key={'control' + d.id}

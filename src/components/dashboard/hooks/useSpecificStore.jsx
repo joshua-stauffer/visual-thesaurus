@@ -5,18 +5,14 @@ export function useSpecificStore(viewName) {
   const [view,] = useState(viewName)
   const [store, setStore] = useState([])
   
-  
-  
 
+  const setDataHasLoadedID = (id) => {
 
-
-
-  const [dataHasLoadedID, setDataHasLoadedID] = useState(null);
-  useEffect(() => {
-    if (!dataHasLoadedID) return;
     setStore(store =>
+
       store.map(object => {
-        if (object.id === dataHasLoadedID) {
+
+        if (object.id === id) {
           const newObject = {
             ...object,
             hasLoaded: true
@@ -25,10 +21,10 @@ export function useSpecificStore(viewName) {
         } else {
           return object
         }
+
       })
     )
-    setDataHasLoadedID(null)
-  }, [dataHasLoadedID])
+  }
 
 
   const [resetDataByID, setResetDataByID] = useState(null);
@@ -50,23 +46,26 @@ export function useSpecificStore(viewName) {
 
   const [changeList, setChangeList] = useState([])
   useEffect(() => {
-    //console.log('store is ', store)
+    console.log('store is ', store)
     const editedElements = store.filter(d => d.isEdited).map(d => d.id)
-    //console.log('edited elements are ', editedElements)
+    console.log('edited elements are ', editedElements)
     setChangeList(editedElements);
   }, [setChangeList, store])
 
 
-
+  
   const setNewData = (newData, id) => {
+
     setStore(store =>
       store.map(object => {
 
         if (object.id === id) {
           const newObject = {
             ...object,
-            data: newData
+            data: newData,
+            isEdited: false
           }
+
           return newObject
         } else {
           return object
@@ -76,13 +75,13 @@ export function useSpecificStore(viewName) {
   }
 
 
-  const [userInput, setUserInput] = useState(null)
-  useEffect(() =>{
-    if (!userInput) return;
+  const setUserInput = userInput => {
     const { newData, field, id } = userInput
 
     setStore(store =>
+
       store.map(object => {
+        
         if (object.id === id) {
           const newObject = {...object, isEdited: true}
           newObject.data[field] = newData;
@@ -90,33 +89,67 @@ export function useSpecificStore(viewName) {
         } else {
           return object
         }
+
       })
     )
-    setUserInput(null);
-  }, [userInput])
+  }
 
 
-  const [togglePublished, setTogglePublished] = useState(null)
-  useEffect(() => {
-    if (!togglePublished) return;
+  const setTogglePublished = togglePublished => {
     const { e, id } = togglePublished;
-    
+
     setStore(store =>
+
       store.map(object => {
+
         if (object.id === id) {
           const newObject = {...object, isEdited: true}
-          newObject.data.published = !e.target.checked
+          newObject.data.published = e.target.checked
+          return newObject
+        } else {
+          return object
+        }
+
+      })
+    )
+  }
+
+  const addThesaurusTerm = (id, title, word) => {
+    
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          const newObject = {...object, isEdited: true}
+          newObject['data'][title] = newObject['data'][title].concat(word)
           return newObject
         } else {
           return object
         }
       })
     )
-    setTogglePublished(null)
-  }, [togglePublished])
+  }
+
+  const delThesaurusTerm = (id, title, word) => {
+
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          const newObject = {...object, isEdited: true}
+          newObject['data'][title] = newObject['data'][title].filter(w => w !== word)
+          return newObject
+        } else {
+          return object
+        }
+      })
+    )
+  }
 
 
-  // wish this could be inside useEffect but need it to return the object
+
   const accessStore = id => {
     const dataObject = store.find(ele => ele.id === id)
     if (!dataObject) {
@@ -130,7 +163,10 @@ export function useSpecificStore(viewName) {
         reload: (id) => setResetDataByID(id),
         updateData: (newData, id) => setNewData(newData, id),
         editData: (newData, field, id) => setUserInput({ newData, field, id }),
-        togglePublished: (e, id) => setTogglePublished({ e, id })
+        togglePublished: (e, id) => setTogglePublished({ e, id }),
+        // view specific methods
+        addThesaurusTerm: (id, title, word) => addThesaurusTerm(id, title, word),
+        delThesaurusTerm: (id, title, word) => delThesaurusTerm(id, title, word)
       }
       setStore(store => store.concat(newDataObject))
       return newDataObject;

@@ -16,15 +16,22 @@ export function useGenericStore(dataName, changeList, resetView, viewHasBeenRese
     viewHasBeenReset();
   }, [resetView])
 
+
+  /*   for some reason, this doesn't always run when i need it to
   useEffect(() => {
     if (!data || !changeList.length) return
-    setState(state => state.map(d => changeList.includes(d.id) ? {...d, isEdited: true} : d))
-  }, [changeList])
+    setState(state => state.map(d => changeList.includes(d.id) ? {...d, isEdited: true} : {...d, isEdited: false}))
+  }, [changeList]) 
+  */
+
+
 
   const updateState = newState => {
       setState(newState)
   }
 
+  console.log(`in generic store ${name}, and change list is `, changeList)
+  console.log(`data in generic store ${name} is `, data)
   // useEffect(() => console.log('data in useGenericStore is ', data))
 
   return {
@@ -32,6 +39,7 @@ export function useGenericStore(dataName, changeList, resetView, viewHasBeenRese
     specificView: specificView,
     data: data,
     hasLoaded,
+    isEditedList: changeList,
     dataHasLoaded: () => setHasLoaded(true),
     reload: () => setHasLoaded(false),
     undo: () => console.log(`undo in resource ${name}`),

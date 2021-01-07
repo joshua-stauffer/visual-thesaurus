@@ -15,7 +15,9 @@ import { useDataStore } from './hooks/useDataStore';
 
 
 export function Dashboard() {
+  console.log('_____________________start dashboard render__________________')
   const [state, dispatch] = useReducer(resourceReducer, resourceReducerState);
+  console.log('in view ', state.view)
   const [callAPI, isLoading] = useAPI();
   const getData = useDataStore();
 
@@ -23,6 +25,8 @@ export function Dashboard() {
   const { hasLoaded } = dataObject;
   const [dataFuncs] = useData(dataObject, dispatch);
   
+  console.log('in dashboard after state initialization. Hasloaded is: ', hasLoaded)
+  console.log('and the data object is ', dataObject)
 
   useEffect(() => {
     if ((hasLoaded || isLoading) || state.view === 'home') return
@@ -44,7 +48,7 @@ export function Dashboard() {
       <GenResourceView
         view={ state.view }
         dispatch={dispatch}
-        data={dataObject.data}
+        dataObject={dataObject}
         dataFuncs={dataFuncs}
       />
     )

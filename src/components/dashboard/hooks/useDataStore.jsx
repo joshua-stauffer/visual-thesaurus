@@ -3,46 +3,117 @@ import { useGenericStore } from './useGenericStore';
 import { useSpecificStore } from './useSpecificStore';
 
 import { parseView } from './../utils/parseView';
-import { useEffect } from 'react';
 
 export function useDataStore(){
   
-  const [accessQuotesStore, changeList, resetView, viewHasBeenReset] = useSpecificStore('quotes');
-  let genQuotesData = useGenericStore('quotes', changeList, resetView, viewHasBeenReset);
+  // Quotes view data
+  const [
+    accessQuotesStore,
+    quotesChangeList,
+    quotesResetView,
+    quotesViewHasBeenReset
+  ] = useSpecificStore('quotes');
+
+  let genQuotesDataObject = useGenericStore(
+    'quotes',
+    quotesChangeList,
+    quotesResetView,
+    quotesViewHasBeenReset
+    );
 
 
-  const genResourcesData = useGenericStore('resources')
+  // Resources view data
+  const [
+    accessResourcesStore,
+    resourcesChangeList,
+    resourcesResetView,
+    resourcesViewHasBeenReset
+  ] = useSpecificStore('resources');
+
+  let genResourcesDataObject = useGenericStore(
+    'resources',
+    resourcesChangeList,
+    resourcesResetView,
+    resourcesViewHasBeenReset
+    );
+
+  // Videos view data
+  const [
+    accessVideosStore,
+    videosChangeList,
+    videosResetView,
+    videosViewHasBeenReset
+  ] = useSpecificStore('videos');
+
+  let genVideosDataObject = useGenericStore(
+    'videos',
+    videosChangeList,
+    videosResetView,
+    videosViewHasBeenReset
+    );
+
+  // blog view data
+
+  // thesaurus view data
+  const [
+    accessThesaurusStore,
+    thesaurusChangeList,
+    thesaurusResetView,
+    thesaurusViewHasBeenReset
+  ] = useSpecificStore('thesaurus');
+
+  let genThesaurusDataObject = useGenericStore(
+    'thesaurus',
+    thesaurusChangeList,
+    thesaurusResetView,
+    thesaurusViewHasBeenReset
+    );
 
 
+  // switch to deliver access to correct data source
   const getData = (rawView) => {
 
-    const [view, id] = parseView(rawView)
+    const [view, id] = parseView(rawView);
 
     switch (view) {
+
       case 'quotes-gen': 
-        return genQuotesData;
+        return genQuotesDataObject;
 
       case 'quotes-sp': {
-        const dataObject = accessQuotesStore(id)
-        return dataObject
+        const dataObject = accessQuotesStore(id);
+        return dataObject;
       }
 
       case 'resources-gen':
-        return genResourcesData;
+        return genResourcesDataObject;
 
-      case 'videos':
-        return
+      case 'resources-sp': {
+        const dataObject = accessResourcesStore(id)
+        return dataObject;
+      }
+
+      case 'videos-gen':
+        return genVideosDataObject;
+
+      case 'videos-sp': {
+        const dataObject = accessVideosStore(id)
+        return dataObject;
+      }
 
       case 'blog':
         return
 
-      case 'thesaurus':
-        return
+      case 'thesaurus-gen':
+        return genThesaurusDataObject;
+
+      case 'thesaurus-sp': {
+        const dataObject = accessThesaurusStore(id)
+        return dataObject;
+      }
 
       case 'home':
-        return {
-          
-        }
+        return {} // needs to be an empty object to support the destructuring that happens in Dashboard
 
       default:
         throw new Error('unknown view passed to useDataStore')

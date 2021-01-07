@@ -6,20 +6,18 @@ import { swapPlaces } from '../utils/swapPlaces';
 
 export function useData(dataObject, dispatch){
 
-
-  
-  
+  // TODO: these can all be pulled out of useEffects and into plain functions
+  // because the API call is already in a useEffect call
 
   const [moveUp, setMoveUp] = useState(null);
   useEffect(() => {
     if (!moveUp) return;
     const { data, updateData } = dataObject;
-
     const indexOne = moveUp;
+
     const eleOneId = data.find(ele => ele.index === indexOne).id
     const indexTwo = moveUp - 1
     const eleTwoId = data.find(ele => ele.index === indexTwo).id
-
     const newData = swapPlaces(data, indexOne, indexTwo);
     const eleOne = newData.find(ele => ele.id === eleOneId)
     eleOne.edited = true;
@@ -32,18 +30,15 @@ export function useData(dataObject, dispatch){
   }, [moveUp])
 
 
-
   const [moveDown, setMoveDown] = useState(null);
   useEffect(() => {
     if (!moveDown && moveDown !== 0) return;
-
     const { data, updateData } = dataObject;
-
     const indexOne = moveDown;
+
     const eleOneId = data.find(ele => ele.index === indexOne).id
     const indexTwo = moveDown + 1
     const eleTwoId = data.find(ele => ele.index === indexTwo).id
-
     const newData = swapPlaces(data, indexOne, indexTwo);
     const eleOne = newData.find(ele => ele.id === eleOneId)
     eleOne.edited = true;
@@ -71,41 +66,40 @@ export function useData(dataObject, dispatch){
     if (!eleToDelete) return
     dataObject.reload();
     const viewName = dataObject.resource + '-del'
-    dispatch({type: viewName, payload: eleToDelete})
+    dispatch({
+      type: viewName,
+      payload: {
+        id: eleToDelete
+      }
+  })
     setEleToDelete(null);
   }, [eleToDelete])
 
 
-  const [save, setSave] = useState(null);
-  useEffect(() => {
-    if (!save) return;
+  const save = () => {
     const { id, data, resource, reload } = dataObject;
+    console.log('saving now, and data is ', data)
     reload(id);
-    const viewName = resource + '-save'
+    const viewName = resource + '-updateOne'
     dispatch(
       {
         type: viewName,
         payload: {
           id: id, 
-          body: {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-          }
+          body: data
         }
-      })
-    setSave(null);
-  }, [save])
-
+      }
+    )
+  }
 
   
   const dataFuncs = {
     moveUp: (index) => setMoveUp(index),
     moveDown: (index) => setMoveDown(index),
     add: () => setMakeNew(true),
-    edit: (id) => dispatch({type: dataObject.specificView, payload: id}),
+    edit: (id) => dispatch({type: dataObject.specificView, payload: {id: id}}),
     del: (id) => setEleToDelete(id),
-    save: () => setSave(true)
+    save: () => save()
   }
 
   return [dataFuncs]

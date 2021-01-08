@@ -53,6 +53,19 @@ export function useDataStore(){
     );
 
   // blog view data
+  const [
+    accessBlogStore,
+    blogChangeList,
+    blogResetView,
+    blogViewHasBeenReset
+  ] = useSpecificStore('blog');
+
+  let genBlogDataObject = useGenericStore(
+    'blog',
+    blogChangeList,
+    blogResetView,
+    blogViewHasBeenReset
+    );
 
   // thesaurus view data
   const [
@@ -101,8 +114,13 @@ export function useDataStore(){
         return dataObject;
       }
 
-      case 'blog':
-        return
+      case 'blog-gen':
+        return genBlogDataObject;
+
+      case 'blog-sp': {
+        const dataObject = accessBlogStore(id)
+        return dataObject;
+      }
 
       case 'thesaurus-gen':
         return genThesaurusDataObject;

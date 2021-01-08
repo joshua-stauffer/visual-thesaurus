@@ -238,15 +238,79 @@ export function resourceReducer(state, action) {
     case 'blog-gen': {
       return {
         view: 'blog-gen',
-        apiAddress: null,
+        apiAddress: '/api/blog',
+        apiArgs: {
+          method: 'GET'
         }
+      }
+    }
+
+    case 'blog-updateBatch': {
+      return {
+        view: 'blog-gen',
+        apiAddress: '/api/blog',
+        apiArgs: {
+          method: 'PUT',
+          body: JSON.stringify(action.payload.body)
+        }
+      }
+    }
+
+    case 'blog-new': {
+      return {
+        view: 'blog-gen',
+        apiAddress: '/api/blog',
+        apiArgs: {
+          method: 'POST'
+        }
+      }
     }
 
     case 'blog-sp': {
+      const id = action.payload.id;
       return {
-        view: 'blog-sp',
-        apiAddress: null,
+        view: 'blog-sp-' + id,
+        apiAddress: '/api/blog-' + id,
+        apiArgs: {
+          method: 'GET'
         }
+      }
+    }
+
+    case 'blog-updateOne': {
+      return {
+        view: 'blog-sp-' + action.payload.id,
+        apiAddress: '/api/blog-' + action.payload.id,
+        apiArgs: {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(action.payload.body)
+        }
+      }
+    }
+
+    case 'blog-NewById': {
+      const id = action.payload.id;
+      return {
+        view: 'blog-sp-' + id,
+        apiAddress: '/api/blog-' + id,
+        apiArgs: {
+          method: 'POST',
+        }
+      }
+    }
+
+    case 'blog-del': {
+      const id = action.payload.id;
+      return {
+        view: 'blog-gen',
+        apiAddress: '/api/blog-' + id,
+        apiArgs: {
+          method: 'DELETE'
+        }
+      }
     }
 
     // thesaurus

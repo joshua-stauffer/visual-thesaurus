@@ -2,6 +2,7 @@ import { EditQuote } from './ResourceViews/editQuote';
 import { EditResource } from './ResourceViews/editResource';
 import { EditVideo } from './ResourceViews/editVideo';
 import { EditThesaurus } from './ResourceViews/editThesaurus';
+import { EditBlog } from './ResourceViews/editBlog';
 
 import { parseView } from './utils/parseView';
 
@@ -20,6 +21,9 @@ export function SpecificResourceView({ rawView, dispatch, dataObject, dataFuncs 
 
     case 'videos-sp':
       return <EditVideo dispatch={dispatch} dataObject={dataObject} dataFuncs={dataFuncs}/>
+
+    case 'blog-sp':
+      return <EditBlog dispatch={dispatch} dataObject={dataObject} dataFuncs={dataFuncs}/>
 
     case 'thesaurus-sp':
       return <EditThesaurus dispatch={dispatch} dataObject={dataObject} dataFuncs={dataFuncs}/>

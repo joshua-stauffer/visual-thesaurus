@@ -92,7 +92,7 @@ export function useData(dataObject, dispatch){
     )
   }
 
-  
+  // these relate to the whole data object
   const dataFuncs = {
     moveUp: (index) => setMoveUp(index),
     moveDown: (index) => setMoveDown(index),

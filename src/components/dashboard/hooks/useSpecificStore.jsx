@@ -34,7 +34,7 @@ export function useSpecificStore(viewName) {
   const genericViewHasBeenReset = () => setResetGenericView(false);
   useEffect(() => {
     if (!resetDataByID) return;
-    console.log('resetting id ', resetDataByID)
+    // console.log('resetting id ', resetDataByID)
     setStore(store => store.map(object => 
       object.id !== resetDataByID ? object : {...object, hasLoaded: false}
     ))
@@ -46,9 +46,9 @@ export function useSpecificStore(viewName) {
 
   const [changeList, setChangeList] = useState([])
   useEffect(() => {
-    console.log('store is ', store)
+    // console.log('store is ', store)
     const editedElements = store.filter(d => d.isEdited).map(d => d.id)
-    console.log('edited elements are ', editedElements)
+    // console.log('edited elements are ', editedElements)
     setChangeList(editedElements);
   }, [setChangeList, store])
 
@@ -62,7 +62,7 @@ export function useSpecificStore(viewName) {
         if (object.id === id) {
           const newObject = {
             ...object,
-            data: newData,
+            data: {...newData, update_timestamp: false},
             isEdited: false
           }
 
@@ -114,6 +114,7 @@ export function useSpecificStore(viewName) {
     )
   }
 
+  // thesaurus specific functions
   const addThesaurusTerm = (id, title, word) => {
     
     setStore(store =>
@@ -148,8 +149,150 @@ export function useSpecificStore(viewName) {
     )
   }
 
+  // blog specific functions
+  const toggleUpdateTimestamp = (e, id ) => {
+
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          const newObject = {...object, isEdited: true}
+          newObject.data.update_timestamp = e.target.checked
+          return newObject
+        } else {
+          return object
+        }
+
+      })
+    )
+  }
+
+  const addContent = (id, content_type) => {
+
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          
+          const order = object.data.contents.length + 1
+
+          const newContent = {
+            content_type: content_type,
+            css: null,
+            id: null,
+            order: order,
+            payload: null,
+            post_id: id,
+            uri: null
+          }
+
+          const newObject = {
+            ...object,
+            isEdited: true,
+            data: {
+              ...object.data,
+              contents: object.data.contents.concat(newContent)
+            } 
+          }
+          return newObject
+
+        } else {
+          return object
+        }
+
+      })
+    )
+  }
+
+  const delContent = (id, order) => {
+
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          const newObject = {
+            ...object,
+            isEdited: true,
+            data: {
+              ...object.data,
+              contents: object.data.contents
+                .filter(d => d.order !== order)
+                .map(d => d.order < order ? d : {...d, order: d.order - 1})
+            }
+          }
+          return newObject
+        } else {
+          return object
+        }
+
+      })
+    )
+  }
 
 
+  const moveContentDown = (id, order) => {
+
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          const newObject = {
+            ...object,
+            isEdited: true,
+            data: {
+              ...object.data,
+              contents: object.data.contents
+                .map(d => 
+                  d.order === order ? {...d, order: d.order + 1}
+                  : d.order === order + 1 ? {...d, order: d.order - 1}
+                  : d
+                )
+            }
+          }
+          return newObject
+        } else {
+          return object
+        }
+
+      })
+    )
+  }
+
+  const moveContentUp = (id, order) => {
+
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          const newObject = {
+            ...object,
+            isEdited: true,
+            data: {
+              ...object.data,
+              contents: object.data.contents
+                .map(d => 
+                  d.order === order ? {...d, order: d.order - 1}
+                  : d.order === order - 1 ? {...d, order: d.order + 1}
+                  : d
+                )
+            }
+          }
+          return newObject
+        } else {
+          return object
+        }
+
+      })
+    )
+  }
+
+
+  // api known as dataObject in the rest of the app
   const accessStore = id => {
     const dataObject = store.find(ele => ele.id === id)
     if (!dataObject) {
@@ -165,8 +308,15 @@ export function useSpecificStore(viewName) {
         editData: (newData, field, id) => setUserInput({ newData, field, id }),
         togglePublished: (e, id) => setTogglePublished({ e, id }),
         // view specific methods
+        // .. thesaurus:
         addThesaurusTerm: (id, title, word) => addThesaurusTerm(id, title, word),
-        delThesaurusTerm: (id, title, word) => delThesaurusTerm(id, title, word)
+        delThesaurusTerm: (id, title, word) => delThesaurusTerm(id, title, word),
+        // .. blog
+        toggleUpdateTimestamp: (e, id) => toggleUpdateTimestamp(e, id),
+        addContent: (id, content_type) => addContent(id, content_type),
+        delContent: (id, order) => delContent(id, order),
+        moveContentUp: (id, order) => moveContentUp(id, order),
+        moveContentDown: (id, order) => moveContentDown(id, order)
       }
       setStore(store => store.concat(newDataObject))
       return newDataObject;
@@ -177,20 +327,3 @@ export function useSpecificStore(viewName) {
 
   return [accessStore, changeList, resetGenericView, genericViewHasBeenReset]
 }
-
-
-
-/*
-
-  useEffect(() => {
-    if (getChangeList && getChangeList().length > 0) {
-      const changeList = getChangeList();
-      setState(state => {
-        if (!state) return;
-        console.log('continuing, state is ', state)
-        const newState = state.map(d => changeList.includes(d.id) ? {...d, isEdited: true} : d)
-        console.log('returning new state: ', newState)
-        return newState
-      })
-  }}, [])
-  */

@@ -85,17 +85,6 @@ export function resourceReducer(state, action) {
       }
     }
 
-    case 'resources-updateBatch': {
-      return {
-        view: 'resources-gen',
-        apiAddress: '/api/resources',
-        apiArgs: {
-          method: 'PUT',
-          body: JSON.stringify(action.payload.body)
-        }
-      }
-    }
-
     case 'resources-new': {
       return {
         view: 'resources-gen',
@@ -123,6 +112,20 @@ export function resourceReducer(state, action) {
         apiAddress: '/api/resources-' + action.payload.id,
         apiArgs: {
           method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(action.payload.body)
+        }
+      }
+    }
+
+    case 'resources-updateBatch': {
+      return {
+        view: 'resources-gen',
+        apiAddress: '/api/resources',
+        apiArgs: {
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -165,16 +168,6 @@ export function resourceReducer(state, action) {
       }
     }
 
-    case 'videos-updateBatch': {
-      return {
-        view: 'videos-gen',
-        apiAddress: '/api/videos',
-        apiArgs: {
-          method: 'PUT',
-          body: JSON.stringify(action.payload.body)
-        }
-      }
-    }
 
     case 'videos-new': {
       return {
@@ -203,6 +196,20 @@ export function resourceReducer(state, action) {
         apiAddress: '/api/videos-' + action.payload.id,
         apiArgs: {
           method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(action.payload.body)
+        }
+      }
+    }
+
+    case 'videos-updateBatch': {
+      return {
+        view: 'videos-gen',
+        apiAddress: '/api/videos',
+        apiArgs: {
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -245,17 +252,6 @@ export function resourceReducer(state, action) {
       }
     }
 
-    case 'blog-updateBatch': {
-      return {
-        view: 'blog-gen',
-        apiAddress: '/api/blog',
-        apiArgs: {
-          method: 'PUT',
-          body: JSON.stringify(action.payload.body)
-        }
-      }
-    }
-
     case 'blog-new': {
       return {
         view: 'blog-gen',
@@ -283,6 +279,20 @@ export function resourceReducer(state, action) {
         apiAddress: '/api/blog-' + action.payload.id,
         apiArgs: {
           method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(action.payload.body)
+        }
+      }
+    }
+
+    case 'blog-updateBatch': {
+      return {
+        view: 'blog-gen',
+        apiAddress: '/api/blog',
+        apiArgs: {
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
           },

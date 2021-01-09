@@ -9,7 +9,7 @@ export function BlogHeader({ payload, onChange, order }) {
       <input
         type='text'
         value={ payload }
-        onChange={ () => onChange() }
+        onChange={ onChange }
       />
     </label>
     </>

@@ -2,7 +2,13 @@
 import { BlogItem } from './blogItem';
 import { compareObjOrder } from './../utils/compareObjOrder';
 
-export function BlogList({ blogData, delContent, moveContentUp, moveContentDown }){
+export function BlogList({
+  blogData,
+  delContent,
+  moveContentUp,
+  moveContentDown,
+  setBlogUserInput
+}){
   blogData.sort(compareObjOrder)
   return (
     <>
@@ -22,6 +28,7 @@ export function BlogList({ blogData, delContent, moveContentUp, moveContentDown 
               moveContentUp={moveContentUp}
               moveContentDown={moveContentDown}
               contentLength={blogData.length}
+              setBlogUserInput={setBlogUserInput}
             />
       ) : <li>No content to display.</li>}
     </ul>

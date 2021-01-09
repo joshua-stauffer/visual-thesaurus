@@ -20,7 +20,8 @@ export function EditBlog(props) {
     addContent,
     delContent,
     moveContentUp,
-    moveContentDown
+    moveContentDown,
+    setBlogUserInput
   } = dataObject;
   const { save } = dataFuncs;
 
@@ -64,6 +65,7 @@ export function EditBlog(props) {
         delContent={delContent}
         moveContentUp={moveContentUp}
         moveContentDown={moveContentDown}
+        setBlogUserInput={setBlogUserInput}
       />
 
       <label>

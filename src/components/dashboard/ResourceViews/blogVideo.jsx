@@ -1,5 +1,5 @@
 
-export function BlogVideo({ order, uri, payload, css, onChange }) {
+export function BlogVideo({ order, uri, payload, css, setInput }) {
   return (
     <>
     <p>{ order }</p>
@@ -20,7 +20,7 @@ export function BlogVideo({ order, uri, payload, css, onChange }) {
       <input
         type='text'
         value={ uri }
-        onChange={ () => onChange() }
+        onChange={ (e) => setInput(e.target.value, 'uri') }
       />
     </label>
 
@@ -29,7 +29,7 @@ export function BlogVideo({ order, uri, payload, css, onChange }) {
       <input
         type='text'
         value={ payload }
-        onChange={ () => onChange() }
+        onChange={ (e) => setInput(e.target.value, 'payload') }
       />
     </label>
 
@@ -37,7 +37,7 @@ export function BlogVideo({ order, uri, payload, css, onChange }) {
       <p>Video Position</p>
       <select
         value={css}
-        onChange={() => onChange()}
+        onChange={(e) => setInput(e.target.value, 'css')}
       >
         <option value='float: right;'>Right</option>
         <option value='float: left;'>Left</option>

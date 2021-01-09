@@ -1,6 +1,6 @@
 
 
-export function BlogIMG({ uri, payload, css, onChange, order }) {
+export function BlogIMG({ uri, payload, css, setInput, order }) {
   return (
     <>
     <p>{ order }</p>
@@ -14,7 +14,7 @@ export function BlogIMG({ uri, payload, css, onChange, order }) {
       <input
         type='text'
         value={ uri }
-        onChange={ () => onChange() }
+        onChange={ (e) => setInput(e.target.value, 'uri') }
       />
     </label>
 
@@ -23,7 +23,7 @@ export function BlogIMG({ uri, payload, css, onChange, order }) {
       <input
         type='text'
         value={ payload }
-        onChange={ () => onChange() }
+        onChange={ (e) => setInput(e.target.value, 'payload') }
       />
     </label>
 
@@ -31,7 +31,7 @@ export function BlogIMG({ uri, payload, css, onChange, order }) {
       <p>Image Position</p>
       <select
         value={css}
-        onChange={() => onChange()}
+        onChange={ (e) => setInput(e.target.value, 'css') }
       >
         <option value='float: right;'>Right</option>
         <option value='float: left;'>Left</option>

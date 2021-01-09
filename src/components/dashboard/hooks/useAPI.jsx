@@ -22,7 +22,7 @@ export function useAPI(){
 
   useEffect(() => {
     if (!loadData) return;
-    console.log('calling api with the following args: ', APIArgs, APIAddress, dataObject)
+    // console.log('calling api with the following args: ', APIArgs, APIAddress, dataObject)
     setIsLoading(true)
     setLoadData(false)
     //setHasLoaded(false)
@@ -30,21 +30,22 @@ export function useAPI(){
     fetch(APIAddress, APIArgs)
       .then(r => r.json())
       .then(data => {
-        console.log('got data ', data)
+        // console.log('got data ', data)
         setIsLoading(false);
         //setHasLoaded(true)
         dataObject.updateData(data, dataObject.id);
         dataObject.dataHasLoaded(dataObject.id);
-        console.log('just updated data for ', dataObject.id)
+        //console.log('just updated data for ', dataObject.id)
         resetAPICall();
       })
+      // TODO: if error, reset hasLoaded to true
       .catch((error => console.log('error in fetch: ', error)))
 
   }, [loadData, APIArgs, APIAddress, dataObject, resetAPICall])
 
 
   const callAPI = (APIAddress, APIArgs, dataObject) => {
-    console.log('entered callAPI')
+    //console.log('entered callAPI')
     setAPIAddress(APIAddress);
     setAPIArgs(APIArgs);
     setDataObject(dataObject);

@@ -3,15 +3,12 @@ html {
 }
 
 .Main {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 2fr 1fr;
-      grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 20px;
 }
 
 .container {
-  -ms-grid-column: 1;
   grid-column: 1;
   width: 100%;
   padding: 0;
@@ -28,14 +25,12 @@ html {
 }
 
 .sidebar {
-  -ms-grid-column: 2;
   grid-column: 2;
   width: 100%;
   height: 600px;
   overflow-y: scroll;
   border: solid 1px black;
 }
-
 .sidebar button {
   width: 50%;
   background-color: grey;
@@ -43,12 +38,10 @@ html {
   border: 1px solid black;
   margin: 0;
 }
-
 .sidebar .active-button {
   border-bottom: none;
   background-color: white;
 }
-
 .sidebar .active-button:focus {
   outline: none;
   border-bottom: 1px dotted grey;
@@ -70,4 +63,4 @@ html {
 }
 
 /* dashboard rules */
-/*# sourceMappingURL=App.css.map */
+@import './sass_partials/overview';

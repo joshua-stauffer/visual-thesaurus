@@ -291,6 +291,34 @@ export function useSpecificStore(viewName) {
     )
   }
 
+  const setBlogUserInput = (id, order, input, field) => {
+
+    setStore(store =>
+
+      store.map(object => {
+
+        if (object.id === id) {
+          const newObject = {
+            ...object,
+            isEdited: true,
+            data: {
+              ...object.data,
+              contents: object.data.contents
+                .map(d => 
+                  d.order === order ? {...d, [field]: input}
+                  : d
+                )
+            }
+          }
+          return newObject
+        } else {
+          return object
+        }
+
+      })
+    )
+  }
+
 
   // api known as dataObject in the rest of the app
   const accessStore = id => {
@@ -316,7 +344,9 @@ export function useSpecificStore(viewName) {
         addContent: (id, content_type) => addContent(id, content_type),
         delContent: (id, order) => delContent(id, order),
         moveContentUp: (id, order) => moveContentUp(id, order),
-        moveContentDown: (id, order) => moveContentDown(id, order)
+        moveContentDown: (id, order) => moveContentDown(id, order),
+        setBlogUserInput: (id, order, input, field) => 
+              setBlogUserInput(id, order, input, field)
       }
       setStore(store => store.concat(newDataObject))
       return newDataObject;

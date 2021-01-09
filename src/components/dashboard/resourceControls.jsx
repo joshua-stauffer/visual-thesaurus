@@ -1,19 +1,20 @@
 
-export function ResourceControls({id, index, funcs, isFirst, isLast, view}) {
-  const { moveUp, moveDown, add, edit, del } = funcs
+export function ResourceControls({id, order, funcs, isFirst, isLast, view }) {
+  const { add, edit, del, moveUp, moveDown } = funcs
+  console.log('---------resource controls, order is ', order)
   return (
     <div>
-      { (index || index === 0) && 
+      { (order || order === 0) && 
         <>
           <button
-            onClick={() => moveUp(index, view)}
+            onClick={() => moveUp(order, view)}
             disabled={moveUp && !isFirst ? false : true}
           >
             Move Up
           </button>
 
           <button
-            onClick={() => moveDown(index, view)}
+            onClick={() => moveDown(order, view)}
             disabled={moveDown && !isLast ? false : true}
           >
             Move Down

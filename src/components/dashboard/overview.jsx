@@ -1,7 +1,7 @@
 
 export function Overview({ dispatch }) {
   return (
-    <main>
+    <main className='main-dashboard'>
       <div>
         <button onClick={() => dispatch({type: 'quotes-gen'})}>Quotes</button>
         <button onClick={() => dispatch({type: 'resources-gen'})}>Resources</button>

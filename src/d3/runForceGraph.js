@@ -8,22 +8,13 @@ export function RunForceGraph(
   clickFunc,
   mouseOverFunc
 ) {
-  console.log('entering d3 code of force graph')
 
   // copy data
   const nodes = [...nodesData];
   const links = [...linksData];
-  console.log('nodes' + nodes);
-  console.log('links' + links)
-
-  console.log('getting container:' + container)
-
   const containerRect = container.getBoundingClientRect();
   const height = containerRect.height;
-  console.log('height:' + height)
   const width = containerRect.width;
-  console.log('width:' + width)
-
 
   const simulation = 
   d3.forceSimulation(nodes)
@@ -39,17 +30,26 @@ export function RunForceGraph(
   const svg = d3.select(container).select('svg')
     .attr('viewBox', [0, 0, width, height]);
 
+  const blues = ["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"];
+  const greens = ["#e8f6e3","#d3eecd","#b7e2b1","#97d494","#73c378","#4daf62","#2f984f","#157f3b","#036429","#00441b"];
+  const oranges = ["#fee8d3","#fdd8b3","#fdc28c","#fda762","#fb8d3d","#f2701d","#e25609","#c44103","#9f3303","#7f2704"];
+  const reds = ["#fee3d6","#fdc9b4","#fcaa8e","#fc8a6b","#f9694c","#ef4533","#d92723","#bb151a","#970b13","#67000d"];
 
   const getNodeColor = node => {
+    // synonym colors
     if (node.group === 1) {
-      return "rgb(13, 123, 166)"
+      return blues[Math.floor(Math.random() * blues.length)]
+    // antonym colors
     } else if (node.group === 2) {
-      return "rgb(166, 41, 13)"
+      return reds[Math.floor(Math.random() * reds.length)]
     } else {
-      return "rgb(224, 206, 99)"
+      // center node color
+      return "#385749ff"
+      // canary yellow "#ffef00"
     }
   };
 
+  
   const getRadius = node => node.level === 1 ? 5 : 45;
 
   const drag = simulation => {
@@ -75,6 +75,15 @@ export function RunForceGraph(
       .on('drag', dragged)
       .on('end', dragended);
   }
+
+  const linkElements = svg
+  .append('g')
+    .attr('stroke', '#999')
+    .attr('stroke-opacity', 0.6)
+  .selectAll('line')
+  .data(links)
+  .join('line')
+      .attr('stroke-width', 2)
 
   const nodeElements = svg.append('g')
     .selectAll('circle')
@@ -103,22 +112,15 @@ export function RunForceGraph(
       .join(
         enter =>
           enter.append('text')
-            .attr('font-family', 'sans-serif')
-            .attr('font-size', 12)
+            .attr('font-family', 'Quicksand')
+            .attr('font-size', '1.5rem')
             .text(d => d.label)
             .style('text-anchor', 'middle')
             .style('color', 'white')
             //.style('filter', 'drop-shadow( 1px 1px 1px rgba(0, 0, 0, .7))')
       );
 
-  const linkElements = svg
-    .append('g')
-      .attr('stroke', '#999')
-      .attr('stroke-opacity', 0.6)
-    .selectAll('line')
-    .data(links)
-    .join('line')
-        .attr('stroke-width', 2)
+
 
 
   simulation.nodes(nodes).on('tick', () => {

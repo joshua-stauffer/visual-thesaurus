@@ -8,15 +8,17 @@ import {
   Link
 } from 'react-router-dom'
 
-import { Thesaurus } from './components/thesaurus/thesaurus'
+// Thesaurus was replaced by ThesaurusBase in merge 1/9/2020
+//import { Thesaurus } from './components/thesaurus/thesaurus'
 import { Dashboard } from './components/dashboard/dashboard'
+import { ThesaurusBase } from './components/thesaurus/thesaurusBase'
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route path="/visual-thesaurus">
-          <Thesaurus />
+          <ThesaurusBase /> 
         </Route>
         <Route path="/dashboard">
           <Dashboard />
@@ -26,4 +28,6 @@ function App() {
   )
 }
 
-export default App
+
+
+export default App;

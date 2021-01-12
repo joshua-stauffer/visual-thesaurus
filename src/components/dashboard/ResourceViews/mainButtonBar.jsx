@@ -1,11 +1,12 @@
+import { FaSave } from 'react-icons/fa';
 
 export function MainButtonBar({backFunc, homeFunc, saveFunc, isEdited}) {
 
   return (
-    <nav>
+    <div className='header-button-box'>
       <button onClick={backFunc}>Back</button>
       <button onClick={homeFunc}>Home</button>
-      <button onClick={saveFunc} disabled={isEdited === true ? false : true}>Save</button>
-    </nav>
+      <button title='Save' onClick={saveFunc} disabled={isEdited === true ? false : true}>Save</button>
+    </div>
   )
 }

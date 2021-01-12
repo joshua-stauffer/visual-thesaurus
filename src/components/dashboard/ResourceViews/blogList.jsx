@@ -12,8 +12,8 @@ export function BlogList({
   blogData.sort(compareObjOrder)
   return (
     <>
-    <h2>Contents</h2>
-    <ul>
+    <h2 className='gen-sub-header'>Post Contents</h2>
+    <ul className='sp-list'>
       {blogData.length ?  
         blogData
           .map(d => 
@@ -30,7 +30,7 @@ export function BlogList({
               contentLength={blogData.length}
               setBlogUserInput={setBlogUserInput}
             />
-      ) : <li>No content to display.</li>}
+      ) : <li className='sp-list-item'><p>No content to display, yet.</p></li>}
     </ul>
     
     </>

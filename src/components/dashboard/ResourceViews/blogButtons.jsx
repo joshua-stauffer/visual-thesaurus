@@ -1,4 +1,5 @@
-
+import { ImMoveUp, ImMoveDown } from 'react-icons/im'
+import {  FaTrash } from 'react-icons/fa'
 
 export function BlogButtons({
   delFunc,
@@ -7,17 +8,27 @@ export function BlogButtons({
   showMoveUp,
   showMoveDown
 }) {
+  const buttonStyle = {size: '15px', color: '#385749ff'}
+
   return (
     <div>
-      <button onClick={delFunc}>Delete Section</button>
+      <button
+        title='Delete'
+        onClick={delFunc}
+      >
+        <FaTrash {...buttonStyle}/>
+      </button>
       <button 
         onClick={moveContentUp}
         disabled={showMoveUp}
-      >Move Section Up</button>
+        title='Move Up'
+      ><ImMoveUp {...buttonStyle}/></button>
       <button
         onClick={moveContentDown}
         disabled={showMoveDown}
-      >Move Section Down</button>
+        title='Move Down'
+      ><ImMoveDown {...buttonStyle}/>
+      </button>
     </div>
   )
 }

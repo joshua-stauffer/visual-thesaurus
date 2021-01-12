@@ -1,24 +1,42 @@
+import { FiAlertCircle } from 'react-icons/fi';
+
 import { ResourceList } from './resourceList';
 
 export function GenResourceView({ view, dispatch, dataObject, dataFuncs }) {
   const name = view.split('-')[0].toUpperCase()
   const { data } = dataObject;
   const { saveBatch } = dataFuncs;
-  const showSaveButton = data[0].order || data[0].order === 0 ? true : false;
+  const canMoveItems = data[0].order || data[0].order === 0 ? true : false;
+  const showSaveButton = data.map(d => d.isEdited).filter(d => d === true).length
   const canSave = data.filter(d => d.isEdited).length ? false : true;
+  const buttonStyle = {size: '20px', color: '#385749ff'}
 
   return (
-    <main>
-      <h1>{ name }</h1>
-      <button onClick={() => dispatch({type: 'home'})}>Home</button>
-      {showSaveButton &&
-        <button
-          onClick={saveBatch}
-          disabled={canSave}
-        >Save Order</button>}
+    <main className='main-dashboard'>
+      <div className='gen-body'>
+        <div className='top-bar'>
 
-      <hr/>
-      <ResourceList dataObject={dataObject} dataFuncs={dataFuncs} view={ view } name={name}/>
+          <h1 className='gen-header'>{ name }</h1>
+          <div className='header-button-box'>
+
+            {canMoveItems && showSaveButton ?
+              <button
+                onClick={saveBatch}
+                disabled={canSave}
+              >Save Order
+            </button> : null}
+
+            <button onClick={() => dispatch({type: 'home'})}>Home</button>
+
+          </div>
+        </div>
+
+        <hr/>
+        <div className='edit-warning-box'>
+          {showSaveButton ? <p><FiAlertCircle className='warning-icon' {...buttonStyle} /> You have unsaved changes in item order</p> : null}
+        </div>
+        <ResourceList dataObject={dataObject} dataFuncs={dataFuncs} view={ view } name={name} buttonStyle={buttonStyle}/>
+      </div>
     </main>
   )
 }

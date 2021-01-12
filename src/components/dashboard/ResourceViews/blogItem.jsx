@@ -1,6 +1,5 @@
-import { TextArea } from './textArea';
+import { BlogText } from './blogText';
 import { BlogIMG } from './blogIMG';  
-import { BlogButtons } from './blogButtons';
 import { BlogHeader } from './blogHeader';
 import { BlogVideo } from './blogVideo';
 
@@ -25,21 +24,32 @@ export function BlogItem({
   const setInput = (input, field) => 
       setBlogUserInput(post_id, order, input, field)
 
+  const blogButtonProps = {
+    delFunc: () => delContent(post_id, order),
+    moveContentUp: () => moveContentUp(post_id, order),
+    moveContentDown: () => moveContentDown(post_id, order),
+    showMoveUp: showMoveUp,
+    showMoveDown: showMoveDown
+  }
+
 
   return (
-    <li>
+    <li className='sp-list-item'>
     {
       (content_type === 'p') ?  
-        <TextArea
-          title={ order }
+        <BlogText
+          title={ 'Paragraph ' + order }
           value={ payload }
           onChange={(e) => setInput(e.target.value, 'payload') }
+          sizeClass={'long-text'}
+          blogButtonsProps={blogButtonProps}
         />
         : (content_type === 'title') ?
         <BlogHeader
-          order={order}
+          title={ 'Heading ' + order}
           payload={payload}
           onChange={ (e) => setInput(e.target.value, 'payload') }
+          blogButtonsProps={blogButtonProps}
         />
       : (content_type === 'img') ?
         <BlogIMG
@@ -47,7 +57,8 @@ export function BlogItem({
           payload={ payload }
           css={ css }
           setInput={ setInput }
-          order={ order }
+          title={ 'Image ' + order }
+          blogButtonsProps={blogButtonProps}
         />
       : (content_type === 'video') ?
         <BlogVideo
@@ -55,17 +66,11 @@ export function BlogItem({
           payload={ payload }
           css={ css }
           setInput={ setInput }
-          order={ order }
+          blogButtonsProps={blogButtonProps}
+          title={ 'Video ' + order }
         />
       : null
     }
-      <BlogButtons
-        delFunc={() => delContent(post_id, order)}
-        moveContentUp={() => moveContentUp(post_id, order)}
-        moveContentDown={() => moveContentDown(post_id, order)}
-        showMoveUp={showMoveUp}
-        showMoveDown={showMoveDown}
-      />
     </li>
   )
 

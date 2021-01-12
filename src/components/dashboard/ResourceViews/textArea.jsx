@@ -1,13 +1,16 @@
 
 
-export function TextArea({ title, value, onChange }) {
+export function TextArea({ title, value, onChange, sizeClass }) {
   return (
-    <label>
-      <p>{ title }</p>
-      <textarea
-        value={value}
-        onChange={onChange}
-      />
-    </label>
+    <div className='sp-item'>
+      <label>
+        <p>{ title }</p>
+        <textarea
+          value={value}
+          onChange={onChange}
+          className={sizeClass}
+        />
+      </label>
+    </div>
   )
 }

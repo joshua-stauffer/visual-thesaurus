@@ -1,37 +1,62 @@
 import { ResourceItem } from './resourceItem';
-import { ResourceControls } from './resourceControls';
+import { ResourceEditControls } from './resourceEditControls';
+import { ResourceMoveControls } from './resourceMoveControls';
 import { compareObjOrder } from './utils/compareObjOrder';
 
-export function ResourceList({dataObject, dataFuncs, view, name}){
+import { AiOutlinePlus } from 'react-icons/ai'
+
+export function ResourceList({dataObject, dataFuncs, view, name, buttonStyle}){
   const { data, isEditedList } = dataObject;
+
   data.sort(compareObjOrder)
 
   return (
-    <ul>
-      
+    <ul className='gen-list'>
+      <li className='gen-list-item'>
+        <div className='gen-list-edit-controls'>
+        <button
+          onClick={()=> dataFuncs.addInOrder(0)}
+          title='Add New'
+        >
+            <AiOutlinePlus {...buttonStyle}/>
+        </button>
+        </div>
+      </li>
+    
     {data.map(d => (
-      <li>
-        <p>
-          {d.order &&  d.order }
-          {d.isEdited && ' - Order of this item has been edited'}
-        </p>
+      <li className={d.isEdited ? 'gen-list-item edit-warning' : 'gen-list-item'}>
+        <ResourceEditControls 
+          id={d.id}
+          key={'control' + d.id}         
+          funcs={dataFuncs}
+          buttonStyle={buttonStyle}
+        />
         <ResourceItem
           key={'item' + d.id}
           primary={d.primary}
           secondary={d.secondary}
           editWarning={isEditedList.includes(d.id) ? true : false}/>
-        <ResourceControls 
+        <ResourceMoveControls
           id={d.id}
-          key={'control' + d.id}
           order={d.order}
           funcs={dataFuncs}
           isFirst={d.order === 0 ? true : false}
           isLast={d.order === data.length - 1 ? true : false}
           view={view}
+          buttonStyle={buttonStyle}
         />
       </li>
     ))}
-      <li><button onClick={()=> dataFuncs.add(-1)}>Add New { name }</button></li>
+          <li className='gen-list-item'>
+        <div className='gen-list-edit-controls'>
+        <button
+          onClick={()=> dataFuncs.add(data.length)}
+          title='Add New'
+        >
+            <AiOutlinePlus {...buttonStyle}/>
+        </button>
+        </div>
+      </li>
     </ul>
   )
 }

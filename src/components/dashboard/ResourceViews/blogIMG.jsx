@@ -1,42 +1,54 @@
+import { BlogButtons } from './blogButtons';
 
-
-export function BlogIMG({ uri, payload, css, setInput, order }) {
+export function BlogIMG({ uri, payload, css, setInput, title, blogButtonsProps }) {
   return (
-    <>
-    <p>{ order }</p>
-    <img
-      src={ uri }
-      alt={ payload }
-    />
+    <div className='sp-item'>
 
-    <label>
-      <p>Image Source</p>
-      <input
-        type='text'
-        value={ uri }
-        onChange={ (e) => setInput(e.target.value, 'uri') }
-      />
-    </label>
+        <div className='blog-col-1'>
+          <p className='sp-label'>{ title }</p>
+          <BlogButtons
+            {...blogButtonsProps}
+          />
+        </div>
 
-    <label>
-      <p>Alternate Text</p>
-      <input
-        type='text'
-        value={ payload }
-        onChange={ (e) => setInput(e.target.value, 'payload') }
-      />
-    </label>
 
-    <label>
-      <p>Image Position</p>
-      <select
-        value={css}
-        onChange={ (e) => setInput(e.target.value, 'css') }
-      >
-        <option value='float: right;'>Right</option>
-        <option value='float: left;'>Left</option>
-      </select>
-    </label>
-    </>
+      <div className='iframe-preview'>
+        <img
+          src={ uri }
+          alt={ payload }
+        />
+      </div>
+
+      <label>
+        <p className='sp-label'>Image Source</p>
+        <input
+          type='text'
+          value={ uri }
+          className='blog-input'
+          onChange={ (e) => setInput(e.target.value, 'uri') }
+        />
+      </label>
+
+      <label>
+        <p className='sp-label'>Alternate Text</p>
+        <input
+          type='text'
+          value={ payload }
+          onChange={ (e) => setInput(e.target.value, 'payload') }
+          className='blog-input'
+        />
+      </label>
+
+      <label>
+        <p className='sp-label'>Image Position</p>
+        <select
+          value={css}
+          onChange={ (e) => setInput(e.target.value, 'css') }
+        >
+          <option value='float: right;'>Right</option>
+          <option value='float: left;'>Left</option>
+        </select>
+      </label>
+    </div>
   )
 }

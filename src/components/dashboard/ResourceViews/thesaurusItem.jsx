@@ -1,13 +1,25 @@
-import { FaLink } from 'react-icons/fa'
+import { FaLink, FaTrash } from 'react-icons/fa'
 
-export function ThesaurusItem({id, title, word, delFunc, allWords}) {
+export function ThesaurusItem({id, title, word, delFunc, allWords, buttonStyle}) {
   return (
-  <li>{ allWords.includes(word) && < FaLink color='green' size='25px'/>} { word }
-    <button 
-      onClick={() => delFunc(id, title, word)}
-    >
-      Delete
-    </button>
+  <li className='thesaurus-item'>
+    <div className='thesaurus-term-box'>
+      
+      <button 
+        onClick={() => delFunc(id, title, word)}
+      >
+        <FaTrash
+          {...buttonStyle}
+          title='Delete'
+        />
+      </button>
+      { allWords.includes(word) && 
+        < FaLink 
+          {...buttonStyle}
+          title={'This term will link to another term!'}
+        />}
+    </div>
+    <p className='thesaurus-term'>{ word }</p> 
   </li>
   )
 }

@@ -116,14 +116,14 @@ export function useSpecificStore(viewName) {
 
   // thesaurus specific functions
   const addThesaurusTerm = (id, title, word) => {
-    
+    console.log('addThesaurusTerm: id, title and word', id, title, word)
     setStore(store =>
 
       store.map(object => {
 
         if (object.id === id) {
           const newObject = {...object, isEdited: true}
-          newObject['data'][title] = newObject['data'][title].concat(word)
+          newObject['data'][title] = object['data'][title].concat(word)
           return newObject
         } else {
           return object

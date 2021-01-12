@@ -1,12 +1,28 @@
 // header styles
 header img {
-    width: 20%;
-    float: right;
-    margin-right: 5%;
+  width: 20%;
+  float: right;
+  margin-right: 5%;
 }
-header h1 {
-  text-align: left;
+header .logo {
+font-family: $logo-main-font;
+font-weight: 500;
+text-align: left;
+font-size: calc(1.6rem + 2vw);
 }
-header h2 {
-  text-align: left;
+header .tagline {
+font-family: $logo-sub-font;
+text-align: left;
+font-size: 1.8rem;
+word-spacing: 2%;
+//font-style: italic;
+letter-spacing: .2rem;
+color: $dark;
 }
+
+@media (min-width: $breakpoint){
+header .logo {
+  font-size: calc(1.6rem + 4.5vw);
+}
+}
+

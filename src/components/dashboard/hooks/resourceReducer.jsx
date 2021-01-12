@@ -14,6 +14,13 @@ export function resourceReducer(state, action) {
       }
     }
 
+    case 'error': {
+      return {
+        view: 'error',
+        errorCode: action.payload.errorCode
+      }
+    }
+
     // quotes
 
     case 'quotes-gen': {
@@ -69,7 +76,7 @@ export function resourceReducer(state, action) {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(action.payload.body) // need to update this - this logic should only be here
+          body: JSON.stringify(action.payload.body)
         }
       }
     }
@@ -134,7 +141,7 @@ export function resourceReducer(state, action) {
       }
     }
 
-    case 'resources-NewById': {
+    case 'resources-newById': {
       const id = action.payload.id;
       return {
         view: 'resources-sp-' + id,
@@ -378,7 +385,7 @@ export function resourceReducer(state, action) {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(action.payload.body) // need to update this - this logic should only be here
+          body: JSON.stringify(action.payload.body)
         }
       }
     }

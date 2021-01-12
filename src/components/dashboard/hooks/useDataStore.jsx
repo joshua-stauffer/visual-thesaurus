@@ -82,6 +82,7 @@ export function useDataStore(){
     thesaurusViewHasBeenReset
     );
 
+  console.log('quotes store is ', genQuotesDataObject)
 
   // switch to deliver access to correct data source
   const getData = (rawView) => {
@@ -132,6 +133,9 @@ export function useDataStore(){
 
       case 'home':
         return {} // needs to be an empty object to support the destructuring that happens in Dashboard
+
+      case 'error':
+        return {}
 
       default:
         throw new Error('unknown view passed to useDataStore')

@@ -7,6 +7,7 @@ import { useApi } from './apiHook';
 export function SearchSideBar({clickNode, ...props}) {
   const [userSearch, setUserSearch] = useState('');
   const { data } = useApi();
+  // console.log('in search side bar, data is ', data)
 
   const searchData = input => {
     setUserSearch(input);

@@ -1,5 +1,4 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import dummyData from '../../d3/dummyData.json';
 
 const ApiContext = createContext();
 export const useApi = () => useContext(ApiContext)
@@ -21,11 +20,11 @@ export function ApiProvider({ children }) {
     }
   }
   useEffect(() => {
-    fetch('http://localhost:3000/api/vt-data', headers)
+    fetch('/api/vt-data', headers)
     .then(response => response.json())
     .then(
       (data) => {
-        console.log(`data is loaded!`, data)
+        //console.log(`data is loaded!`, data)
         setData(data);
         setTimeout(setIsLoaded, 1, true)
       },

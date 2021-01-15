@@ -1,5 +1,12 @@
-import * as d3 from 'd3';
-
+import {
+  drag as d3Drag,
+  forceCenter,
+  forceCollide,
+  forceLink,
+  forceManyBody,
+  forceSimulation,
+  select
+} from 'd3';
 
 export function RunForceGraph(
   container,
@@ -17,23 +24,21 @@ export function RunForceGraph(
   const width = containerRect.width;
 
   const simulation = 
-  d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links)
+  forceSimulation(nodes)
+    .force('link', forceLink(links)
                       .id(d => d.id)
                       .strength(d => d.strength)
                       .distance(125))
-    .force('charge', d3.forceManyBody().strength(-90))
-    .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide([45]));
+    .force('charge', forceManyBody().strength(-90))
+    .force('center', forceCenter(width / 2, height / 2))
+    .force('collision', forceCollide([45]));
 
 
-  const svg = d3.select(container).select('svg')
+  const svg = select(container).select('svg')
     .attr('viewBox', [0, 0, width, height]);
 
-  const blues = ["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"];
-  const greens = ["#e8f6e3","#d3eecd","#b7e2b1","#97d494","#73c378","#4daf62","#2f984f","#157f3b","#036429","#00441b"];
-  const oranges = ["#fee8d3","#fdd8b3","#fdc28c","#fda762","#fb8d3d","#f2701d","#e25609","#c44103","#9f3303","#7f2704"];
-  const reds = ["#fee3d6","#fdc9b4","#fcaa8e","#fc8a6b","#f9694c","#ef4533","#d92723","#bb151a","#970b13","#67000d"];
+  const blues = ["#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"];
+  const reds = ["#f9694c","#ef4533","#d92723","#bb151a","#970b13","#67000d"];
 
   const getNodeColor = node => {
     // synonym colors
@@ -45,12 +50,14 @@ export function RunForceGraph(
     } else {
       // center node color
       return "#385749ff"
-      // canary yellow "#ffef00"
     }
   };
 
   
-  const getRadius = node => node.level === 1 ? 5 : 45;
+  const getRadius = node => 
+    node.level === 1 ? 5 
+    : node.level === 0 ? 60
+    : 45;
 
   const drag = simulation => {
     function dragstarted(event) {
@@ -70,7 +77,7 @@ export function RunForceGraph(
       event.subject.fy = null;
     }
 
-    return d3.drag()
+    return d3Drag()
       .on('start', dragstarted)
       .on('drag', dragged)
       .on('end', dragended);
@@ -93,7 +100,7 @@ export function RunForceGraph(
         enter.append('circle')
         .attr('r', getRadius)
         .attr('fill', getNodeColor)
-        .attr('fill-opacity', 0.75)
+        .attr('fill-opacity', 0.95) // 0.75
         .call(drag(simulation))
       .on('mouseover', (e, d) => mouseOverFunc(d.id))
       .on('mouseout', () => mouseOverFunc(null))
@@ -116,7 +123,8 @@ export function RunForceGraph(
             .attr('font-size', '1.5rem')
             .text(d => d.label)
             .style('text-anchor', 'middle')
-            .style('color', 'white')
+            .style('fill', 'white')
+            .style('letter-spacing', '0.1rem')
             //.style('filter', 'drop-shadow( 1px 1px 1px rgba(0, 0, 0, .7))')
       );
 

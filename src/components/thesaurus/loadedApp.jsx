@@ -5,7 +5,7 @@ import { SideBar } from './sideBar';
 
 
 export function LoadedApp() {
-  console.log('entered loaded app')
+  // console.log('entered loaded app')
   const { data } = useApi()
   const {  
     titleText,
@@ -27,7 +27,7 @@ export function LoadedApp() {
   } = useSideBarState(data);
 
   return (
-    <section className="Main">
+    <>
         <ForceGraph 
           activeLinks={activeLinks}
           activeNodes={activeNodes}
@@ -48,6 +48,6 @@ export function LoadedApp() {
           hoverDef={hoverDef}
           clickNode={clickNode}
         />
-    </section>
+    </>
   )
 }

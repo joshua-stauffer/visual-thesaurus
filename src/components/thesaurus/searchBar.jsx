@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useApi } from './oops_apiHook';
 import {ThesaurusTerm} from './thesaurusTerm'
 
 export function SearchBar({ setSelectedNode = f => f, data}) {
@@ -9,13 +10,7 @@ export function SearchBar({ setSelectedNode = f => f, data}) {
     setUserSearch(input);
   }
 
-  const fakeData = {
-    "Test": "A",
-    "Tyranny": "B",
-    "Truth": "C",
-    "Validation": "A"
-  }
-  const filteredData = Object.keys(fakeData).filter(d => d.startsWith(userSearch) || d === '')
+  const filteredData = Object.keys(data).filter(d => d.startsWith(userSearch) || d === '')
 
   const submit = e => {
     e.preventDefault();

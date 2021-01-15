@@ -1,10 +1,10 @@
 import React from 'react';
-import { ForceGraph } from './forceGraph';
-import { SideBar } from './sideBar';
-import { PopupSidebar } from './popupSidebar';
-import { SearchBar } from './searchBar';
-import { useSideBarState, useHoverSidebarState } from './hooks';
-import data from '../../d3/data.json';
+import { ForceGraph } from './components/thesaurus/forceGraph';
+import { SideBar } from './components/thesaurus/sideBar';
+import { PopupSidebar } from './components/thesaurus/popupSidebar';
+import { SearchBar } from './components/thesaurus/searchBar';
+import { useSideBarState, useHoverSidebarState } from './components/thesaurus/hooks';
+import data from './d3/data.json';
 
 export function Thesaurus() {
   const [popUpBarId, setPopUpBarId] = useHoverSidebarState();

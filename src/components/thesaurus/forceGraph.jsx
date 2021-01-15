@@ -17,8 +17,11 @@ export function ForceGraph({
 
 
   return (
-    <div ref={containerRef} className="container">
-      <svg></svg>
+    <div className="Main">
+
+      <div ref={containerRef} className="container">
+        <svg></svg>
+      </div>
     </div>
   )
 }

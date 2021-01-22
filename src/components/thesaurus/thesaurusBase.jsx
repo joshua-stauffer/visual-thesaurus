@@ -5,7 +5,6 @@ import { Loading } from './loading';
 
 export function ThesaurusBase() {
   const { isLoaded, ApiError } = useApi();
-  // console.log('in thesaurus base - is loaded and api error are ', isLoaded, ApiError)
 
   if (ApiError) {
 

@@ -5,7 +5,6 @@ import { SideBar } from './sideBar';
 
 
 export function LoadedApp() {
-  // console.log('entered loaded app')
   const { data } = useApi()
   const {  
     titleText,

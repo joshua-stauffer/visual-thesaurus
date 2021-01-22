@@ -24,7 +24,6 @@ export function ApiProvider({ children }) {
     .then(response => response.json())
     .then(
       (data) => {
-        //console.log(`data is loaded!`, data)
         setData(data);
         setTimeout(setIsLoaded, 1, true)
       },

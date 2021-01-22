@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const getFirstKey = d => {
   for (let k in d) {
-    return k;
+    if (d[k].order === 0) return k;
   }
 }
 
@@ -57,13 +57,9 @@ export function useSideBarState(data) {
 
 
 export function useNodeState(data) {
-  // console.log('entering useNodeState')
 
   const key = getFirstKey(data);
-  //console.log(data[key])
   const [activeNode, setActiveNode] = useState(data[key]) 
-  //TODO: update this to reflect something in the API interface so that it
-  // always selects the first (default) object in data set
  
   function clickNode(node) {
     if (node in data) {

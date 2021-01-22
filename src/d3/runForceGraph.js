@@ -23,16 +23,14 @@ export function RunForceGraph(
   const height = containerRect.height;
   const width = containerRect.width;
 
-  const simulation = 
-  forceSimulation(nodes)
-    .force('link', forceLink(links)
-                      .id(d => d.id)
-                      .strength(d => d.strength)
-                      .distance(125))
-    .force('charge', forceManyBody().strength(-90))
-    .force('center', forceCenter(width / 2, height / 2))
-    .force('collision', forceCollide([45]));
-
+  const simulation = forceSimulation(nodes)
+      .force('link', forceLink(links)
+                        .id(d => d.id)
+                        .strength(d => d.strength)
+                        .distance(125))
+      .force('charge', forceManyBody().strength(-500))
+      .force('center', forceCenter(width / 2, height / 2))
+      .force('collision', forceCollide([45]));
 
   const svg = select(container).select('svg')
     .attr('viewBox', [0, 0, width, height]);
@@ -43,16 +41,15 @@ export function RunForceGraph(
   const getNodeColor = node => {
     // synonym colors
     if (node.group === 1) {
-      return blues[Math.floor(Math.random() * blues.length)]
+      return blues[(node.index % blues.length)]
     // antonym colors
     } else if (node.group === 2) {
-      return reds[Math.floor(Math.random() * reds.length)]
+      return reds[(node.index % reds.length)]
     } else {
       // center node color
       return "#385749ff"
     }
   };
-
   
   const getRadius = node => 
     node.level === 1 ? 5 
@@ -127,9 +124,6 @@ export function RunForceGraph(
             .style('letter-spacing', '0.1rem')
             //.style('filter', 'drop-shadow( 1px 1px 1px rgba(0, 0, 0, .7))')
       );
-
-
-
 
   simulation.nodes(nodes).on('tick', () => {
     nodeElements

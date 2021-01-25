@@ -27,7 +27,7 @@ export function RunForceGraph(
       .force('link', forceLink(links)
                         .id(d => d.id)
                         .strength(d => d.strength)
-                        .distance(125))
+                        .distance(1))
       .force('charge', forceManyBody().strength(-500))
       .force('center', forceCenter(width / 2, height / 2))
       .force('collision', forceCollide([45]));

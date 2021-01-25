@@ -9,7 +9,7 @@ export function HoverSideBar({
       
       <aside className="popup-aside">
         <h1 className="sidebar-title">{ hoverTitle }</h1>
-        <p>Click to learn more about this word</p>
+        <p>Click circle to select</p>
         <h4 className="popup-subtitle">Definition</h4>
         <p className="sidebar-text">{ hoverDef }</p>
         <hr/>
